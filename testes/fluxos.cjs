@@ -34,6 +34,14 @@ const ok=(c,m)=>{console.log((c?'OK   ':'FALHA')+' '+m); if(!c) process.exitCode
   ok(await p.isVisible('a[href*="instagram.com/moveagencia.com.br"]'),'bio: Instagram real');
   await p.click('button:has-text("Conversar sobre a gestão")');
   ok(await p.isVisible('dialog[open] >> text=gestão das redes do meu negócio'),'bio → contato de gestão contextual');
+  // bio -> método e entregas -> jornada
+  p=await nova(); await p.goto(B+'links/index.html?utm_source=instagram');
+  await p.click('text=Quero conhecer a Move'); await p.waitForLoadState();
+  ok(p.url().includes('metodo/index.html')&&p.url().includes('utm_source=instagram'),'bio → método e entregas com origem');
+  ok(await p.locator('#entregas article').count()===4,'método: um cartão por entrega');
+  await p.click('#entregas >> text=Ver a Jornada do Cliente'); await p.waitForLoadState();
+  ok(p.url().includes('jornada/index.html')&&await p.isVisible('text=Cinco canais'),'método → jornada');
+  ok((await p.getAttribute('main a:has-text("Organizar meus canais")','href')).startsWith('https://wa.me/559284135839'),'jornada: WhatsApp contextual');
   // privacidade
   p=await nova(); await p.goto(B+'links/index.html');
   await p.click('footer >> text=Privacidade'); await p.waitForLoadState();
@@ -67,7 +75,7 @@ const ok=(c,m)=>{console.log((c?'OK   ':'FALHA')+' '+m); if(!c) process.exitCode
   p=await nova(); await p.goto(B+'black/index.html?utm_source=story'); await p.waitForURL(/planejamento/);
   ok(p.url().includes('utm_source=story'),'/black redireciona preservando origem');
   // 6. largura sem rolagem horizontal
-  for (const w of [360,390,768,1440]) for (const pg of ['index.html','planejamento/index.html','links/index.html','privacidade/index.html','termos/index.html']){
+  for (const w of [360,390,768,1440]) for (const pg of ['metodo/index.html','jornada/index.html','index.html','planejamento/index.html','links/index.html','privacidade/index.html','termos/index.html']){
     p=await nova(w); await p.goto(B+pg+'?estado=ativa'); const sw=await p.evaluate(()=>document.documentElement.scrollWidth);
     ok(sw<=w,`${pg} em ${w}px sem rolagem horizontal (${sw})`); await p.close();
   }

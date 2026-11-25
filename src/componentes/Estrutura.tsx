@@ -188,7 +188,8 @@ export function Rodape() {
           <p className="rotulo text-papel/50">Páginas</p>
           <ul className="mt-4 flex flex-col gap-3 text-papel/80">
             <li><a className="hover:text-papel" href={href("inicio", { hash: "gestao" })}>Gestão de Redes</a></li>
-            <li><a className="hover:text-papel" href={href("inicio", { hash: "metodo" })}>Método Move</a></li>
+            <li><a className="hover:text-papel" href={href("metodo")}>Método e entregas</a></li>
+            <li><a className="hover:text-papel" href={href("jornada")}>Jornada do Cliente</a></li>
             <li><a className="hover:text-papel" href={href("planejamento")}>Planejamento Estratégico</a></li>
             <li><a className="hover:text-papel" href={href("links")}>Links rápidos</a></li>
           </ul>

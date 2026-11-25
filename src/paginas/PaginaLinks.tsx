@@ -45,7 +45,7 @@ const OPCOES: Opcao[] = [
     pedido: "Arrumar meus canais",
     servico: "Jornada do Cliente",
     texto: "Site, link na bio, Google, Instagram e WhatsApp levando a pessoa até o seu atendimento.",
-    cta: "Organizar meus canais",
+    cta: "Ver a Jornada do Cliente",
     icone: "M5 6.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0 M16 17.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0 M8 6.5h5a3 3 0 0 1 0 6h-2a3 3 0 0 0 0 6h5",
   },
   {
@@ -146,8 +146,8 @@ export function PaginaLinks() {
     if (novo) registrar("escolher_objetivo", { objetivo: id });
   };
   const seguir = (o: Opcao) => {
-    if (o.id === "planejamento") {
-      location.href = href("planejamento");
+    if (o.id === "planejamento" || o.id === "jornada") {
+      location.href = href(o.id);
       return;
     }
     abrirContato(o.id);
@@ -341,7 +341,7 @@ export function PaginaLinks() {
           </section>
 
           <a
-            href={href("inicio")}
+            href={href("metodo")}
             className="group mt-4 flex min-h-16 items-center justify-between gap-4 rounded-[1.25rem] px-5 py-4 ring-1 ring-linha transition-colors hover:bg-white/70"
           >
             <span>

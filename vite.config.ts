@@ -19,6 +19,8 @@ export default defineConfig(({ mode }) => ({
         black: resolve(__dirname, "black/index.html"),
         privacidade: resolve(__dirname, "privacidade/index.html"),
         termos: resolve(__dirname, "termos/index.html"),
+        metodo: resolve(__dirname, "metodo/index.html"),
+        jornada: resolve(__dirname, "jornada/index.html"),
       },
     },
   },
