@@ -9,7 +9,7 @@ import { Seta } from "../../componentes/Botao";
 import { abrirContato } from "../../componentes/Contato";
 import { Faq, type Pergunta } from "../../componentes/Faq";
 import { Letreiro, TituloCinetico } from "../../componentes/Movimento";
-import { Demonstracao } from "./Demonstracao";
+import { EntregaDesdobrada } from "./EntregaDesdobrada";
 import { Contratar } from "./Contratar";
 import { Contador } from "./Contador";
 import { CenaDaDor } from "./CenaDaDor";
@@ -152,24 +152,8 @@ export function PaginaPlanejamento() {
             </div>
           </section>
 
-          {/* 4. A entrega por dentro */}
-          <section id="entregaveis" className="relative py-20 md:py-28">
-            <div aria-hidden="true" className="holofote-baixo pointer-events-none absolute inset-0" />
-            <div className="envoltorio relative">
-              <div className="grid gap-5 md:grid-cols-[1.1fr_0.9fr] md:items-end" data-revelar>
-                <div>
-                  <p className="rotulo text-bege">Abra a entrega</p>
-                  <h2 className="display mt-4 text-[2.3rem] md:text-[3.4rem]">Mexa no que a Andreza recebeu.</h2>
-                </div>
-                <p className="text-papel/65 md:pb-2">
-                  Toque nas abas. Cada amostra mostra se aquele material entra no seu pacote. O método é o mesmo; a estratégia é feita para o seu negócio.
-                </p>
-              </div>
-              <div className="mesa mt-10 overflow-hidden rounded-[2rem] bg-offwhite p-3 text-marinho md:p-6" data-revelar>
-                <Demonstracao contido />
-              </div>
-            </div>
-          </section>
+          {/* 4. A entrega por dentro: prints reais, capítulo a capítulo */}
+          <EntregaDesdobrada />
 
           {/* 5. O preço: de 1.800 por 1.000 */}
           <section id="investimento" ref={preco} className="relative overflow-hidden py-20 md:py-28">

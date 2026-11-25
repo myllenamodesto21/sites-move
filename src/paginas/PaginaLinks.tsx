@@ -86,29 +86,28 @@ function IconeInstagram({ className = "size-5" }: { className?: string }) {
 }
 
 function destaque() {
+  const pitch = "Para quem produz o próprio conteúdo e cansou de postar no escuro: a estratégia da sua marca e 24 pautas prontas para gravar, com acompanhamento por dois meses.";
+  const preco = (
+    <>
+      <s className="opacity-60">{reais(oferta.regular.preco)}</s> <strong>{reais(c.preco)}</strong>
+      {parcelasBlack() && <span className="block text-[0.85rem] text-papel/70">ou {parcelasBlack()} no cartão</span>}
+    </>
+  );
   if (estado === "ativa")
     return {
       selo: `${c.nomeCurto} · até ${dataBrasilia(c.fim)}`,
-      titulo: "Quero direção para o meu conteúdo",
-      texto: `24 pautas para oito semanas, com estratégia e acompanhamento.${parcelasBlack() ? ` Ou ${parcelasBlack()} no cartão` : ""}${c.cupom ? `, com o cupom ${c.cupom}.` : "."}`,
-      preco: (
-        <>
-          <s className="opacity-60">{reais(oferta.regular.preco)}</s> <strong>{reais(c.preco)}</strong>
-        </>
-      ),
-      cta: "Ver a entrega e a condição",
+      titulo: "Saiba o que postar pelos próximos dois meses",
+      texto: `${pitch}${c.cupom ? ` Cupom ${c.cupom}.` : ""}`,
+      preco,
+      cta: "Garantir o preço da Black",
     };
   if (estado === "pre")
     return {
-      selo: `${c.nomeCurto} · começa em ${dataBrasilia(c.inicio)}`,
-      titulo: "Dois meses de conteúdo com direção",
-      texto: `A entrega que o Studio Brasilê recebeu, agora para o seu negócio: estratégia, 24 pautas e acompanhamento. Só de ${dataBrasilia(c.inicio)} a ${dataBrasilia(c.fim)}.`,
-      preco: (
-        <>
-          <s className="opacity-60">{reais(oferta.regular.preco)}</s> <strong>{reais(c.preco)}</strong>
-        </>
-      ),
-      cta: "Ver a entrega",
+      selo: `${c.nomeCurto} · ${dataBrasilia(c.inicio)} a ${dataBrasilia(c.fim)}`,
+      titulo: "Saiba o que postar pelos próximos dois meses",
+      texto: pitch,
+      preco,
+      cta: "Ver o planejamento",
     };
   if (estado === "esgotada")
     return {
@@ -487,10 +486,10 @@ function Contador() {
 
 /** A Gestão de Redes em um cartão: na frente, o resultado; no verso, o que a Move faz todo mês. */
 const GESTAO_MES = [
-  "Direção e calendário do mês",
-  "Roteiro, legenda e design ou edição",
-  "Aprovação, programação e publicação",
-  "Leitura das métricas e reunião com você",
+  { t: "Conteúdo que só você poderia ter feito", d: "Um processo validado extrai o seu repertório e a sua experiência. Nada de tema genérico." },
+  { t: "Estratégia antes do post", d: "Cada conteúdo tem motivo, linha e objetivo ligados ao seu negócio." },
+  { t: "A Move por perto, todo mês", d: "Lemos os sinais com você e ajustamos o caminho junto." },
+  { t: "Você aprova e segue atendendo", d: "Sem carregar o processo nas costas." },
 ];
 
 function GestaoQueVira() {
@@ -518,7 +517,7 @@ function GestaoQueVira() {
         }}
         className={`virar group mt-4 block w-full text-left ${virado ? "virado" : ""}`}
       >
-        <span className="virar-miolo relative grid min-h-[19rem]">
+        <span className="virar-miolo relative grid min-h-[24rem]">
           {/* Frente: o resultado */}
           <span className="virar-face relative flex flex-col overflow-hidden rounded-[1.75rem] bg-white text-marinho shadow-[0_24px_50px_-30px_rgba(19,32,63,0.55)] ring-1 ring-marinho/10">
             <span className="flex items-center justify-between gap-3 bg-bege px-6 py-3.5">
@@ -534,8 +533,8 @@ function GestaoQueVira() {
               </span>
               <span className="mt-auto flex items-center justify-between gap-3 border-t border-marinho/10 pt-4 text-azul">
                 <span className="text-sm font-semibold">
-                  Ver o que fazemos por você
-                  <span className="mt-0.5 block text-[0.78rem] font-normal text-marinho/55">Todo mês, do roteiro à publicação</span>
+                  Ver o nosso diferencial
+                  <span className="mt-0.5 block text-[0.78rem] font-normal text-marinho/55">Por que os clientes ficam</span>
                 </span>
                 {virar}
               </span>
@@ -544,14 +543,17 @@ function GestaoQueVira() {
           {/* Verso: o que a Move faz todo mês */}
           <span className="virar-verso relative flex flex-col overflow-hidden rounded-[1.75rem] bg-marinho text-papel">
             <span className="flex items-center justify-between gap-3 bg-azul px-6 py-3.5">
-              <span className="rotulo text-bege">Todo mês, a Move faz</span>
-              <span className="text-[0.78rem] font-semibold text-papel/70">Você aprova</span>
+              <span className="rotulo text-bege">O que só a Move faz</span>
+              <span className="text-[0.78rem] font-semibold text-papel/70">Gestão Move</span>
             </span>
             <span className="flex flex-1 flex-col px-6 pb-5 pt-3">
-              {GESTAO_MES.map((t, i) => (
-                <span key={t} className={`grid grid-cols-[auto_1fr] items-baseline gap-x-4 py-2.5 ${i ? "border-t border-white/10" : ""}`}>
+              {GESTAO_MES.map((g, i) => (
+                <span key={g.t} className={`grid grid-cols-[auto_1fr] items-baseline gap-x-4 py-2 ${i ? "border-t border-white/10" : ""}`}>
                   <span className="display text-[1.05rem] text-bege">0{i + 1}</span>
-                  <span>{t}</span>
+                  <span>
+                    <span className="block font-semibold leading-snug">{g.t}</span>
+                    <span className="mt-0.5 block text-[0.85rem] leading-snug text-papel/65">{g.d}</span>
+                  </span>
                 </span>
               ))}
               <span className="mt-auto flex items-center justify-between pt-3 text-sm text-papel/60">

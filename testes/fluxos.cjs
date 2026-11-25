@@ -7,7 +7,7 @@ const ok=(c,m)=>{console.log((c?'OK   ':'FALHA')+' '+m); if(!c) process.exitCode
   // 1. Instagram -> bio -> oferta -> checkout/contato
   let p=await nova();
   await p.goto(B+'links/index.html?utm_source=instagram&utm_medium=bio&estado=ativa');
-  await p.click('text=Ver a entrega e a condição');
+  await p.click('text=Garantir o preço da Black');
   await p.waitForLoadState();
   ok(p.url().includes('planejamento/index.html')&&p.url().includes('utm_source=instagram'),'bio → planejamento preserva utm: '+p.url());
   ok(await p.isVisible('text=De R$ 1.800 por'),'preço da Black visível no topo');
@@ -22,19 +22,10 @@ const ok=(c,m)=>{console.log((c?'OK   ':'FALHA')+' '+m); if(!c) process.exitCode
   ok(await p.isVisible('dialog[open] >> text=Vim pela Black do Planejamento'),'contato da Black com mensagem contextual');
   await p.keyboard.press('Escape');
   ok(!(await p.isVisible('dialog[open]')),'Esc fecha o contato');
-  // demo: teclado e toque
-  await p.click('#aba-estrategia'); await p.keyboard.press('ArrowRight');
-  ok(await p.getAttribute('#aba-perfil','aria-selected')==='true','seta → troca de amostra (teclado)');
-  await p.click('[role=radio]:has-text("Bio atual")'); await p.waitForTimeout(300); ok(await p.isVisible('text=identificação de CEO'),'perfil: comparação bio atual');
-  await p.click('button:has-text("Clientes")'); ok(await p.isVisible('text=Feedbacks reais e autorizados'),'perfil: toque no destaque mostra função');
-  await p.click('#aba-calendario'); await p.click('text=Como agendar seu primeiro');
-  ok(await p.isVisible('text=Texto dos cards'),'calendário: abre pauta com trecho');
-  await p.click('#aba-stories'); await p.click('[aria-label="Próxima tela"]');
-  ok(await p.isVisible('text=2/4'),'stories: botão avança');
-  await p.focus('[aria-roledescription="sequência de stories"]'); await p.keyboard.press('ArrowRight');
-  ok(await p.isVisible('text=3/4'),'stories: seta do teclado avança');
-  await p.click('#aba-guia'); await p.click('text=Combine o que pode fotografar');
-  ok(await p.isVisible('text=1 de 5'),'guia: checklist marca item');
+  // entrega desdobrada: prints reais carregam
+  const prints=await p.evaluate(async()=>{const im=[...document.querySelectorAll('#entregaveis img')];im.forEach(i=>i.loading='eager');await Promise.all(im.map(i=>i.decode().catch(()=>null)));return im.map(i=>i.naturalWidth)});
+  ok(prints.length===7&&prints.every(w=>w>1000),'entrega: 7 prints reais carregados '+prints.join(','));
+  ok(await p.locator('#entregaveis >> text=Manaus').count()===0,'entrega: sem Manaus');
   // 2. bio -> gestão contato
   p=await nova(); await p.goto(B+'links/index.html?utm_source=instagram');
   await p.click('button:has-text("Delegar minhas redes")');
