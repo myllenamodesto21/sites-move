@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from "react";
 import { oferta } from "../config/oferta";
 import { contatos } from "../config/site";
-import { dataBrasilia, estadoDaCampanha, parcelasBlack, reais } from "../lib/campanha";
+import { dataBrasilia, estadoDaCampanha } from "../lib/campanha";
 import { arquivo, href } from "../lib/rotas";
 import { registrar } from "../lib/medicao";
 import { Pagina } from "../componentes/Estrutura";
@@ -86,19 +86,12 @@ function IconeInstagram({ className = "size-5" }: { className?: string }) {
 }
 
 function destaque() {
-  const pitch = "Para quem produz o próprio conteúdo e cansou de postar no escuro: a estratégia da sua marca e 24 pautas prontas para gravar, com acompanhamento por dois meses.";
-  const preco = (
-    <>
-      <s className="opacity-60">{reais(oferta.regular.preco)}</s> <strong>{reais(c.preco)}</strong>
-      {parcelasBlack() && <span className="block text-[0.85rem] text-papel/70">ou {parcelasBlack()} no cartão</span>}
-    </>
-  );
+  const pitch = "Para quem produz o próprio conteúdo e cansou de postar no escuro. A estratégia da sua marca e 24 pautas prontas para gravar, com dois meses de acompanhamento.";
   if (estado === "ativa")
     return {
       selo: `${c.nomeCurto} · até ${dataBrasilia(c.fim)}`,
       titulo: "Saiba o que postar pelos próximos dois meses",
-      texto: `${pitch}${c.cupom ? ` Cupom ${c.cupom}.` : ""}`,
-      preco,
+      texto: pitch,
       cta: "Garantir o preço da Black",
     };
   if (estado === "pre")
@@ -106,7 +99,6 @@ function destaque() {
       selo: `${c.nomeCurto} · ${dataBrasilia(c.inicio)} a ${dataBrasilia(c.fim)}`,
       titulo: "Saiba o que postar pelos próximos dois meses",
       texto: pitch,
-      preco,
       cta: "Ver o planejamento",
     };
   if (estado === "esgotada")
@@ -114,14 +106,12 @@ function destaque() {
       selo: `${c.nomeCurto} · agenda preenchida`,
       titulo: "Quero direção para o meu conteúdo",
       texto: "A agenda da Black foi preenchida. Veja a entrega e fale sobre a próxima disponibilidade.",
-      preco: null,
       cta: "Ver a entrega",
     };
   return {
     selo: oferta.produto,
     titulo: "Quero direção para produzir meu conteúdo",
     texto: "Estratégia, 24 pautas e acompanhamento.",
-    preco: null,
     cta: "Conhecer o Planejamento",
   };
 }
@@ -224,12 +214,12 @@ export function PaginaLinks() {
           {/* Números da Move */}
           <dl className="mt-6 grid grid-cols-3 gap-2 text-center">
             {[
-              { v: 4, p: "+", r: "anos de mercado" },
-              { v: 20, p: "+", r: "negócios atendidos" },
-              { v: 4, p: "", r: "estados com equipe Move" },
+              { v: 4, p: "+", r: "anos de\nmercado" },
+              { v: 20, p: "+", r: "negócios\natendidos" },
+              { v: 4, p: "", r: "estados com\nequipe Move" },
             ].map((n) => (
-              <div key={n.r} className="flex flex-col-reverse rounded-2xl bg-white/70 px-2 py-3 ring-1 ring-linha">
-                <dt className="text-[0.75rem] leading-tight text-suave">{n.r}</dt>
+              <div key={n.r} className="flex flex-col-reverse items-center gap-1.5 rounded-2xl bg-white/70 px-2 py-3 ring-1 ring-linha">
+                <dt className="min-h-[2.5em] whitespace-pre-line text-[0.75rem] leading-tight text-suave">{n.r}</dt>
                 <dd className="display text-[1.9rem] leading-none text-azul">
                   <Contagem valor={n.v} prefixo={n.p} />
                 </dd>
@@ -259,7 +249,6 @@ export function PaginaLinks() {
                 </div>
                 <p className="display mt-2 text-[1.9rem] leading-[1.05]">{d.titulo}</p>
                 <p className="mt-2 max-w-[30ch] text-papel/80">{d.texto}</p>
-                {d.preco && <p className="mt-3 text-lg">{d.preco}</p>}
                 <Contador />
                 <span className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full bg-papel px-5 font-semibold text-azul">
                   {d.cta} <Seta className="size-4 transition-transform group-hover:translate-x-1" />
@@ -283,7 +272,7 @@ export function PaginaLinks() {
                     type="button"
                     aria-pressed={objetivo === o.id}
                     onClick={() => escolher(o.id)}
-                    className="opcao-briefing group relative flex min-h-[8.5rem] flex-col justify-between rounded-[1.25rem] p-4 text-left ring-1 ring-white/12 transition-[background-color,color,transform,box-shadow] duration-300 active:scale-[0.98] aria-pressed:bg-papel aria-pressed:text-marinho aria-pressed:ring-papel"
+                    className="opcao-briefing group relative flex min-h-[8.5rem] flex-col justify-start gap-4 rounded-[1.25rem] p-4 text-left ring-1 ring-white/12 transition-[background-color,color,transform,box-shadow] duration-300 active:scale-[0.98] aria-pressed:bg-papel aria-pressed:text-marinho aria-pressed:ring-papel"
                     style={{ ["--atraso" as string]: `${i * 70}ms` }}
                   >
                     <span className="flex items-center justify-between">
@@ -331,8 +320,8 @@ export function PaginaLinks() {
                     </div>
                   </div>
                 ) : (
-                  <p className="flex items-center gap-2 px-1 py-2 text-sm text-papel/60">
-                    <span aria-hidden="true" className="size-1.5 animate-pulse rounded-full bg-bege" />
+                  <p className="flex items-start gap-2.5 px-1 py-2 text-sm text-papel/60">
+                    <span aria-hidden="true" className="mt-[0.45rem] size-1.5 shrink-0 animate-pulse rounded-full bg-bege" />
                     Toque em uma opção e a Move mostra o seu caminho.
                   </p>
                 )}
@@ -340,19 +329,23 @@ export function PaginaLinks() {
             </div>
           </section>
 
-          <a
-            href={href("metodo")}
-            className="group mt-4 flex min-h-16 items-center justify-between gap-4 rounded-[1.25rem] px-5 py-4 ring-1 ring-linha transition-colors hover:bg-white/70"
-          >
-            <span>
-              <span className="block font-semibold">Quero conhecer a Move</span>
-              <span className="block text-sm text-suave">Método, serviços e entregas.</span>
-            </span>
-            <Seta className="size-4 transition-transform group-hover:translate-x-1" />
-          </a>
-
-          {/* A Gestão de Redes: cartão que vira */}
-          <GestaoQueVira />
+          {/* Fechamento: um pitch da Move inteira e um botão só */}
+          <section aria-labelledby="titulo-move" className="mt-14 text-center" data-revelar>
+            <p className="rotulo text-azul">A Move</p>
+            <h2 id="titulo-move" className="display mx-auto mt-3 max-w-[16ch] text-[2.1rem] leading-[1.04]">
+              O melhor do seu negócio, <span className="manuscrita pr-1.5 text-[1.2em] text-azul">visível</span> antes da contratação.
+            </h2>
+            <p className="mx-auto mt-4 max-w-[34ch] text-suave">
+              Estratégia, conteúdo e canais pensados pelo mesmo método, com a Move por perto. Por isso quem entra fica anos.
+            </p>
+            <a
+              href={href("metodo")}
+              onClick={() => registrar("clique_cta_principal", { pagina: "links", lugar: "fechamento" })}
+              className="group mt-7 inline-flex min-h-14 items-center gap-2 rounded-full bg-marinho px-7 font-semibold text-papel transition-transform active:scale-[0.98]"
+            >
+              Quero conhecer a Move <Seta className="size-4 transition-transform group-hover:translate-x-1" />
+            </a>
+          </section>
 
           <Letreiro
             className="-mx-5 mt-12 border-y border-marinho/10 bg-bege py-3 text-marinho"
@@ -481,100 +474,5 @@ function Contador() {
         ))}
       </div>
     </div>
-  );
-}
-
-/** A Gestão de Redes em um cartão: na frente, o resultado; no verso, o que a Move faz todo mês. */
-const GESTAO_MES = [
-  { t: "Conteúdo que só você poderia ter feito", d: "Um processo validado extrai o seu repertório e a sua experiência. Nada de tema genérico." },
-  { t: "Estratégia antes do post", d: "Cada conteúdo tem motivo, linha e objetivo ligados ao seu negócio." },
-  { t: "A Move por perto, todo mês", d: "Lemos os sinais com você e ajustamos o caminho junto." },
-  { t: "Você aprova e segue atendendo", d: "Sem carregar o processo nas costas." },
-];
-
-function GestaoQueVira() {
-  const [virado, setVirado] = useState(false);
-  const whats = linkWhatsApp("gestao");
-  const virar = (
-    <span aria-hidden="true" className="grid size-10 shrink-0 place-items-center rounded-full bg-current/10">
-      <svg viewBox="0 0 24 24" className="size-[1.1rem] transition-transform duration-500 group-hover:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4.5 12a7.5 7.5 0 0 1 13-5.1L19.5 9 M19.5 4.5V9H15 M19.5 12a7.5 7.5 0 0 1-13 5.1L4.5 15 M4.5 19.5V15H9" />
-      </svg>
-    </span>
-  );
-  return (
-    <section aria-labelledby="titulo-gestao" className="mt-12" data-revelar>
-      <p id="titulo-gestao" className="rotulo text-azul">
-        Gestão de Redes Sociais
-      </p>
-      <p className="mt-1 text-sm text-suave">Para quem quer delegar as redes e seguir atendendo.</p>
-      <button
-        type="button"
-        aria-pressed={virado}
-        onClick={() => {
-          setVirado((v) => !v);
-          if (!virado) registrar("abrir_amostra", { amostra: "gestao-bio" });
-        }}
-        className={`virar group mt-4 block w-full text-left ${virado ? "virado" : ""}`}
-      >
-        <span className="virar-miolo relative grid min-h-[24rem]">
-          {/* Frente: o resultado */}
-          <span className="virar-face relative flex flex-col overflow-hidden rounded-[1.75rem] bg-white text-marinho shadow-[0_24px_50px_-30px_rgba(19,32,63,0.55)] ring-1 ring-marinho/10">
-            <span className="flex items-center justify-between gap-3 bg-bege px-6 py-3.5">
-              <span className="rotulo text-azul">O nosso maior resultado</span>
-              <span className="text-[0.78rem] font-semibold text-marinho/70">Gestão Move</span>
-            </span>
-            <span className="relative flex flex-1 flex-col px-6 pb-5 pt-5">
-              <span className="display block text-[1.9rem] leading-[1.05]">
-                Cliente que entra <span className="manuscrita text-[1.25em] text-azul">fica anos.</span>
-              </span>
-              <span className="mt-3 block max-w-[32ch] text-[0.95rem] text-marinho/70">
-                Mais de 20 negócios atendidos em mais de 4 anos. Quem tem um perfil que trabalha todo mês, com a Move por perto, não quer voltar a fazer sozinho.
-              </span>
-              <span className="mt-auto flex items-center justify-between gap-3 border-t border-marinho/10 pt-4 text-azul">
-                <span className="text-sm font-semibold">
-                  Ver o nosso diferencial
-                  <span className="mt-0.5 block text-[0.78rem] font-normal text-marinho/55">Por que os clientes ficam</span>
-                </span>
-                {virar}
-              </span>
-            </span>
-          </span>
-          {/* Verso: o que a Move faz todo mês */}
-          <span className="virar-verso relative flex flex-col overflow-hidden rounded-[1.75rem] bg-marinho text-papel">
-            <span className="flex items-center justify-between gap-3 bg-azul px-6 py-3.5">
-              <span className="rotulo text-bege">O que só a Move faz</span>
-              <span className="text-[0.78rem] font-semibold text-papel/70">Gestão Move</span>
-            </span>
-            <span className="flex flex-1 flex-col px-6 pb-5 pt-3">
-              {GESTAO_MES.map((g, i) => (
-                <span key={g.t} className={`grid grid-cols-[auto_1fr] items-baseline gap-x-4 py-2 ${i ? "border-t border-white/10" : ""}`}>
-                  <span className="display text-[1.05rem] text-bege">0{i + 1}</span>
-                  <span>
-                    <span className="block font-semibold leading-snug">{g.t}</span>
-                    <span className="mt-0.5 block text-[0.85rem] leading-snug text-papel/65">{g.d}</span>
-                  </span>
-                </span>
-              ))}
-              <span className="mt-auto flex items-center justify-between pt-3 text-sm text-papel/60">
-                Toque para voltar
-                {virar}
-              </span>
-            </span>
-          </span>
-        </span>
-      </button>
-      {whats && (
-        <a
-          href={whats}
-          target="_blank"
-          rel="noopener"
-          onClick={() => registrar("abrir_whatsapp", { pagina: "links", servico: "gestao" })}
-          className="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-azul underline-offset-4 hover:underline"
-        >
-          Conversar sobre a gestão <Seta />
-        </a>
-      )}
-    </section>
   );
 }
