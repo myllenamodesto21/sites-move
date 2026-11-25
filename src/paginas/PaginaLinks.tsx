@@ -90,7 +90,7 @@ function destaque() {
   const pitch = "A estratégia da sua marca e 24 pautas prontas para gravar, com a Move acompanhando.";
   if (estado === "ativa")
     return {
-      selo: `Black · até ${dataBrasilia(c.fim)}`,
+      selo: `Black · ${Math.round((1 - c.preco / oferta.regular.preco) * 100)}% off · até ${dataBrasilia(c.fim)}`,
       titulo,
       texto: pitch,
       cta: "Garantir o preço da Black",
@@ -244,18 +244,16 @@ export function PaginaLinks() {
               />
               <span aria-hidden="true" className="pointer-events-none absolute -bottom-24 -right-20 size-64 rounded-full bg-[radial-gradient(circle,rgb(106_146_193/0.35),transparent_65%)]" />
               <div className="relative p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="rotulo text-bege">{d.selo}</p>
-                    <p className="display mt-2 max-w-[13ch] text-[1.65rem] leading-[1.05]">{d.titulo}</p>
-                  </div>
-                  <SeloGirando />
-                </div>
-                <p className="mt-2 max-w-[32ch] text-[0.95rem] leading-snug text-papel/80">{d.texto}</p>
-                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3">
-                  <span className="inline-flex min-h-11 items-center gap-2 rounded-full bg-papel px-5 font-semibold text-azul">
+                <p className="rotulo text-bege">{d.selo}</p>
+                <p className="display mt-2 text-balance text-[2.05rem] leading-[1.05]">{d.titulo}</p>
+                <p className="mt-2 text-pretty text-[0.98rem] leading-snug text-papel/80">{d.texto}</p>
+                {/* O botão herda o giro do antigo selo: uma luz bege corre pela borda */}
+                <span className="botao-giro mt-4 flex rounded-full p-[2px]">
+                  <span className="relative z-[1] inline-flex min-h-12 w-full items-center justify-between gap-2 rounded-full bg-papel px-5 font-semibold text-azul">
                     {d.cta} <Seta className="size-4 transition-transform group-hover:translate-x-1" />
                   </span>
+                </span>
+                <div className="mt-3 text-center">
                   <Contador />
                 </div>
               </div>
@@ -395,27 +393,6 @@ export function PaginaLinks() {
         )}
       </main>
     </Pagina>
-  );
-}
-
-/** Selo circular da campanha: a data de abertura antes, o desconto durante. */
-function SeloGirando() {
-  if (estado !== "ativa" && estado !== "pre") return null;
-  const centro = estado === "ativa" ? `-${Math.round((1 - c.preco / oferta.regular.preco) * 100)}%` : dataBrasilia(c.inicio);
-  return (
-    <span aria-hidden="true" className="relative grid size-[4rem] shrink-0 place-items-center">
-      <svg viewBox="0 0 100 100" className="girar absolute inset-0 size-full text-bege">
-        <defs>
-          <path id="circulo-selo" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
-        </defs>
-        <text className="fill-current font-titulo text-[10.5px] font-semibold uppercase">
-          <textPath href="#circulo-selo" textLength="236" lengthAdjust="spacing">
-            Black · Planejamento · Black · Planejamento ·
-          </textPath>
-        </text>
-      </svg>
-      <span className="display grid size-10 place-items-center rounded-full bg-bege text-[0.85rem] text-marinho">{centro}</span>
-    </span>
   );
 }
 

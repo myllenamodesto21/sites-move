@@ -966,3 +966,33 @@
   .frase-dor, .celular-tela { transition: none; }
   .digitando, .cursor, .rolar-feed, .mensagem { animation: none !important; }
 }
+
+/* Botão da Black nos links: uma luz bege gira pela borda, no lugar do antigo selo girando */
+.botao-giro {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: rgb(236 220 195 / 0.35);
+}
+.botao-giro::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(140%, 26rem);
+  aspect-ratio: 1;
+  background: conic-gradient(from 0deg, transparent 0 62%, var(--color-bege) 80%, #fff 86%, transparent 94%);
+  transform: translate(-50%, -50%);
+  animation: giro-borda 3.2s linear infinite;
+}
+@keyframes giro-borda {
+  to {
+    transform: translate(-50%, -50%) rotate(1turn);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .botao-giro::before {
+    animation: none;
+    display: none;
+  }
+}
