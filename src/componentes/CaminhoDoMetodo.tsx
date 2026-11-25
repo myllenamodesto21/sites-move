@@ -31,6 +31,9 @@ const FRAGMENTOS = [
   { texto: "o que você defende", lugar: "left-[-12%] bottom-[14%] rotate-2" },
 ];
 
+/** Folga na troca de capítulo, em fração de capítulo. */
+const FOLGA = 0.12;
+
 const reduzido = () => typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function CaminhoDoMetodo() {
@@ -43,16 +46,25 @@ export function CaminhoDoMetodo() {
     const medir = () => {
       quadro = 0;
       const el = secao.current;
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const curso = r.height - window.innerHeight;
-      // Fora da tela, nada a fazer: a rolagem do resto da página não paga pela cena.
-      if (r.bottom < 0 || r.top > window.innerHeight) return;
-      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, curso)));
-      // A linha avança direto no SVG, sem passar pelo React; o React só renderiza quando o capítulo muda.
+      const palco = el?.firstElementChild as HTMLElement | null;
+      if (!el || !palco) return;
+      // As medidas vêm do próprio palco (100svh, fixo), nunca da janela: no celular, a barra do
+      // navegador some e volta durante a rolagem e mudaria a conta a cada gesto.
+      const alto = palco.offsetHeight;
+      const curso = Math.max(1, el.offsetHeight - alto);
+      const topo = el.getBoundingClientRect().top;
+      if (topo > alto || topo < -curso - alto) return;
+      const p = Math.min(1, Math.max(0, -topo / curso));
+      // A linha avança direto no SVG, sem passar pelo React.
       linha.current?.setAttribute("stroke-dashoffset", String(1 - (0.08 + p * 0.92)));
-      const nova = Math.min(CAPITULOS.length - 1, Math.floor(p * CAPITULOS.length));
-      setEtapa((atual) => (atual === nova ? atual : nova));
+      // O capítulo só troca quando passa da divisa com folga: parado na divisa, a cena não vai e volta.
+      const n = CAPITULOS.length;
+      setEtapa((atual) => {
+        const pos = p * n;
+        if (pos >= atual + 1 + FOLGA) return Math.min(n - 1, Math.floor(pos));
+        if (pos < atual - FOLGA) return Math.max(0, Math.floor(pos));
+        return atual;
+      });
     };
     const agendar = () => {
       if (!quadro) quadro = requestAnimationFrame(medir);

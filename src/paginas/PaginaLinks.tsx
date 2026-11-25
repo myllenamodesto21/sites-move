@@ -8,7 +8,6 @@ import { Pagina } from "../componentes/Estrutura";
 import { abrirContato, linkWhatsApp } from "../componentes/Contato";
 import { Marca } from "../componentes/Marca";
 import { Contagem, FundoGrafismo, Letreiro, MGigante } from "../componentes/Movimento";
-import { pautaPausas } from "../config/amostras";
 import { Seta } from "../componentes/Botao";
 
 const estado = estadoDaCampanha();
@@ -102,10 +101,14 @@ function destaque() {
   if (estado === "pre")
     return {
       selo: `${c.nomeCurto} · começa em ${dataBrasilia(c.inicio)}`,
-      titulo: `A Black do Planejamento começa em ${dataBrasilia(c.inicio)}`,
-      texto: "Conheça a entrega e tire suas dúvidas antes da abertura.",
-      preco: null,
-      cta: "Conhecer a entrega",
+      titulo: "Dois meses de conteúdo com direção",
+      texto: `A entrega que o Studio Brasilê recebeu, agora para o seu negócio: estratégia, 24 pautas e acompanhamento. Só de ${dataBrasilia(c.inicio)} a ${dataBrasilia(c.fim)}.`,
+      preco: (
+        <>
+          <s className="opacity-60">{reais(oferta.regular.preco)}</s> <strong>{reais(c.preco)}</strong>
+        </>
+      ),
+      cta: "Ver a entrega",
     };
   if (estado === "esgotada")
     return {
@@ -224,7 +227,7 @@ export function PaginaLinks() {
             {[
               { v: 4, p: "+", r: "anos de mercado" },
               { v: 20, p: "+", r: "negócios atendidos" },
-              { v: 4, p: "", r: "estados na equipe" },
+              { v: 4, p: "", r: "estados com equipe Move" },
             ].map((n) => (
               <div key={n.r} className="flex flex-col-reverse rounded-2xl bg-white/70 px-2 py-3 ring-1 ring-linha">
                 <dt className="text-[0.75rem] leading-tight text-suave">{n.r}</dt>
@@ -349,8 +352,8 @@ export function PaginaLinks() {
             <Seta className="size-4 transition-transform group-hover:translate-x-1" />
           </a>
 
-          {/* Uma pauta por dentro: cartão que vira */}
-          <PautaQueVira />
+          {/* A Gestão de Redes: cartão que vira */}
+          <GestaoQueVira />
 
           <Letreiro
             className="-mx-5 mt-12 border-y border-marinho/10 bg-bege py-3 text-marinho"
@@ -482,78 +485,76 @@ function Contador() {
   );
 }
 
-/** Uma pauta do case Brasilê: toque para ver o que tem por trás. */
-function PautaQueVira() {
+/** A Gestão de Redes em um cartão: na frente, o resultado; no verso, o que a Move faz todo mês. */
+const GESTAO_MES = [
+  "Direção e calendário do mês",
+  "Roteiro, legenda e design ou edição",
+  "Aprovação, programação e publicação",
+  "Leitura das métricas e reunião com você",
+];
+
+function GestaoQueVira() {
   const [virado, setVirado] = useState(false);
+  const whats = linkWhatsApp("gestao");
   const virar = (
-    <span aria-hidden="true" className="grid size-10 place-items-center rounded-full bg-current/10">
+    <span aria-hidden="true" className="grid size-10 shrink-0 place-items-center rounded-full bg-current/10">
       <svg viewBox="0 0 24 24" className="size-[1.1rem] transition-transform duration-500 group-hover:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4.5 12a7.5 7.5 0 0 1 13-5.1L19.5 9 M19.5 4.5V9H15 M19.5 12a7.5 7.5 0 0 1-13 5.1L4.5 15 M4.5 19.5V15H9" />
       </svg>
     </span>
   );
   return (
-    <section aria-labelledby="titulo-pauta" className="mt-12" data-revelar>
-      <div className="flex items-end justify-between gap-4">
-        <div>
-          <p id="titulo-pauta" className="rotulo text-azul">
-            Uma pauta por dentro
-          </p>
-          <p className="mt-1 text-sm text-suave">Toque no cartão para ver o que existe por trás de um post.</p>
-        </div>
-      </div>
+    <section aria-labelledby="titulo-gestao" className="mt-12" data-revelar>
+      <p id="titulo-gestao" className="rotulo text-azul">
+        Gestão de Redes Sociais
+      </p>
+      <p className="mt-1 text-sm text-suave">Para quem quer delegar as redes e seguir atendendo.</p>
       <button
         type="button"
         aria-pressed={virado}
         onClick={() => {
           setVirado((v) => !v);
-          if (!virado) registrar("abrir_amostra", { amostra: "pauta-bio" });
+          if (!virado) registrar("abrir_amostra", { amostra: "gestao-bio" });
         }}
         className={`virar group mt-4 block w-full text-left ${virado ? "virado" : ""}`}
       >
-        <span className="virar-miolo relative grid min-h-[18rem]">
-          {/* Frente: a pauta como uma ficha */}
+        <span className="virar-miolo relative grid min-h-[19rem]">
+          {/* Frente: o resultado */}
           <span className="virar-face relative flex flex-col overflow-hidden rounded-[1.75rem] bg-white text-marinho shadow-[0_24px_50px_-30px_rgba(19,32,63,0.55)] ring-1 ring-marinho/10">
             <span className="flex items-center justify-between gap-3 bg-bege px-6 py-3.5">
-              <span className="rotulo text-azul">Trecho de pauta</span>
-              <span className="text-[0.78rem] font-semibold text-marinho/70">Studio Brasilê</span>
+              <span className="rotulo text-azul">O nosso maior resultado</span>
+              <span className="text-[0.78rem] font-semibold text-marinho/70">Gestão Move</span>
             </span>
-            <span className="relative flex flex-1 flex-col px-6 pb-5 pt-4">
-              <span aria-hidden="true" className="manuscrita -mb-6 block text-[4.5rem] leading-none text-azul/25">
-                “
+            <span className="relative flex flex-1 flex-col px-6 pb-5 pt-5">
+              <span className="display block text-[1.9rem] leading-[1.05]">
+                Cliente que entra <span className="manuscrita text-[1.25em] text-azul">fica anos.</span>
               </span>
-              <span className="display block text-[1.7rem] leading-[1.12]">{pautaPausas.tema}</span>
+              <span className="mt-3 block max-w-[32ch] text-[0.95rem] text-marinho/70">
+                Mais de 20 negócios atendidos em mais de 4 anos. Quem tem um perfil que trabalha todo mês, com a Move por perto, não quer voltar a fazer sozinho.
+              </span>
               <span className="mt-auto flex items-center justify-between gap-3 border-t border-marinho/10 pt-4 text-azul">
                 <span className="text-sm font-semibold">
-                  Ver o que tem por trás
-                  <span className="mt-0.5 block text-[0.78rem] font-normal text-marinho/55">O que comunica e como produzir</span>
+                  Ver o que fazemos por você
+                  <span className="mt-0.5 block text-[0.78rem] font-normal text-marinho/55">Todo mês, do roteiro à publicação</span>
                 </span>
                 {virar}
               </span>
             </span>
           </span>
-          {/* Verso: o que existe por trás do post */}
+          {/* Verso: o que a Move faz todo mês */}
           <span className="virar-verso relative flex flex-col overflow-hidden rounded-[1.75rem] bg-marinho text-papel">
             <span className="flex items-center justify-between gap-3 bg-azul px-6 py-3.5">
-              <span className="rotulo text-bege">Por trás do post</span>
-              <span className="text-[0.78rem] font-semibold text-papel/70">Consultoria Move</span>
+              <span className="rotulo text-bege">Todo mês, a Move faz</span>
+              <span className="text-[0.78rem] font-semibold text-papel/70">Você aprova</span>
             </span>
-            <span className="flex flex-1 flex-col gap-4 px-6 pb-5 pt-5">
-              <span className="grid grid-cols-[auto_1fr] gap-x-4">
-                <span className="display text-[1.1rem] text-bege">01</span>
-                <span>
-                  <span className="rotulo block text-papel/60">O que comunica</span>
-                  <span className="mt-1 block">{pautaPausas.comunica}</span>
+            <span className="flex flex-1 flex-col px-6 pb-5 pt-3">
+              {GESTAO_MES.map((t, i) => (
+                <span key={t} className={`grid grid-cols-[auto_1fr] items-baseline gap-x-4 py-2.5 ${i ? "border-t border-white/10" : ""}`}>
+                  <span className="display text-[1.05rem] text-bege">0{i + 1}</span>
+                  <span>{t}</span>
                 </span>
-              </span>
-              <span className="grid grid-cols-[auto_1fr] gap-x-4 border-t border-white/10 pt-4">
-                <span className="display text-[1.1rem] text-bege">02</span>
-                <span>
-                  <span className="rotulo block text-papel/60">Como produzir</span>
-                  <span className="mt-1 block text-papel/85">{pautaPausas.execucao}</span>
-                </span>
-              </span>
-              <span className="mt-auto flex items-center justify-between text-sm text-papel/60">
+              ))}
+              <span className="mt-auto flex items-center justify-between pt-3 text-sm text-papel/60">
                 Toque para voltar
                 {virar}
               </span>
@@ -561,9 +562,17 @@ function PautaQueVira() {
           </span>
         </span>
       </button>
-      <a href={href("planejamento", { hash: "entregaveis" })} className="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-azul underline-offset-4 hover:underline">
-        Ver a entrega completa <Seta />
-      </a>
+      {whats && (
+        <a
+          href={whats}
+          target="_blank"
+          rel="noopener"
+          onClick={() => registrar("abrir_whatsapp", { pagina: "links", servico: "gestao" })}
+          className="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-azul underline-offset-4 hover:underline"
+        >
+          Conversar sobre a gestão <Seta />
+        </a>
+      )}
     </section>
   );
 }
