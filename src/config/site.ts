@@ -135,8 +135,10 @@ export const imagens: Record<string, ImagemConfig> = {
     pendencia: "Recorte da apresentação pública revisada.",
   },
   A14: {
-    src: null,
-    alt: "Equipe Move em trabalho",
+    src: "fotos/equipe-move.webp",
+    largura: 1200,
+    altura: 1500,
+    alt: "Retrato de quem acompanha os clientes na Move",
     pendencia: "Foto real e autorizada da equipe ou bastidor de trabalho.",
   },
   M01: {
