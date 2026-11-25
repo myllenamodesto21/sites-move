@@ -86,20 +86,21 @@ function IconeInstagram({ className = "size-5" }: { className?: string }) {
 }
 
 function destaque() {
-  const pitch = "Para quem produz o próprio conteúdo e cansou de postar no escuro. A estratégia da sua marca e 24 pautas prontas para gravar, com dois meses de acompanhamento.";
+  const titulo = "Dois meses sabendo o que postar";
+  const pitch = "A estratégia da sua marca e 24 pautas prontas para gravar, com a Move acompanhando.";
   if (estado === "ativa")
     return {
-      selo: `${c.nomeCurto} · até ${dataBrasilia(c.fim)}`,
-      titulo: "Saiba o que postar pelos próximos dois meses",
+      selo: `Black · até ${dataBrasilia(c.fim)}`,
+      titulo,
       texto: pitch,
       cta: "Garantir o preço da Black",
     };
   if (estado === "pre")
     return {
-      selo: `${c.nomeCurto} · ${dataBrasilia(c.inicio)} a ${dataBrasilia(c.fim)}`,
-      titulo: "Saiba o que postar pelos próximos dois meses",
+      selo: `Black · ${dataBrasilia(c.inicio)} a ${dataBrasilia(c.fim)}`,
+      titulo,
       texto: pitch,
-      cta: "Ver o planejamento",
+      cta: "Ver a oferta da Black",
     };
   if (estado === "esgotada")
     return {
@@ -242,17 +243,21 @@ export function PaginaLinks() {
                 className="pointer-events-none absolute -bottom-8 -right-6 h-[8rem] w-auto max-w-none transition-transform duration-700 group-hover:-translate-y-1 group-hover:rotate-[-3deg]"
               />
               <span aria-hidden="true" className="pointer-events-none absolute -bottom-24 -right-20 size-64 rounded-full bg-[radial-gradient(circle,rgb(106_146_193/0.35),transparent_65%)]" />
-              <div className="relative p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <p className="rotulo pt-1 text-bege">{d.selo}</p>
+              <div className="relative p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="rotulo text-bege">{d.selo}</p>
+                    <p className="display mt-2 max-w-[13ch] text-[1.65rem] leading-[1.05]">{d.titulo}</p>
+                  </div>
                   <SeloGirando />
                 </div>
-                <p className="display mt-2 text-[1.9rem] leading-[1.05]">{d.titulo}</p>
-                <p className="mt-2 max-w-[30ch] text-papel/80">{d.texto}</p>
-                <Contador />
-                <span className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full bg-papel px-5 font-semibold text-azul">
-                  {d.cta} <Seta className="size-4 transition-transform group-hover:translate-x-1" />
-                </span>
+                <p className="mt-2 max-w-[32ch] text-[0.95rem] leading-snug text-papel/80">{d.texto}</p>
+                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3">
+                  <span className="inline-flex min-h-11 items-center gap-2 rounded-full bg-papel px-5 font-semibold text-azul">
+                    {d.cta} <Seta className="size-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                  <Contador />
+                </div>
               </div>
             </a>
           </Brilho>
@@ -398,7 +403,7 @@ function SeloGirando() {
   if (estado !== "ativa" && estado !== "pre") return null;
   const centro = estado === "ativa" ? `-${Math.round((1 - c.preco / oferta.regular.preco) * 100)}%` : dataBrasilia(c.inicio);
   return (
-    <span aria-hidden="true" className="relative grid size-[4.6rem] shrink-0 place-items-center">
+    <span aria-hidden="true" className="relative grid size-[4rem] shrink-0 place-items-center">
       <svg viewBox="0 0 100 100" className="girar absolute inset-0 size-full text-bege">
         <defs>
           <path id="circulo-selo" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
@@ -409,7 +414,7 @@ function SeloGirando() {
           </textPath>
         </text>
       </svg>
-      <span className="display grid size-11 place-items-center rounded-full bg-bege text-[0.95rem] text-marinho">{centro}</span>
+      <span className="display grid size-10 place-items-center rounded-full bg-bege text-[0.85rem] text-marinho">{centro}</span>
     </span>
   );
 }
@@ -462,17 +467,13 @@ function Contador() {
     { v: Math.floor((s % 3600) / 60), r: "min" },
     { v: s % 60, r: "seg" },
   ];
+  const [d, h, m, seg] = partes.map((p) => String(p.v).padStart(2, "0"));
   return (
-    <div className="relative mt-4">
-      <p className="text-xs text-papel/70">{estado === "ativa" ? "A condição termina em" : "A Black começa em"}</p>
-      <div className="mt-1.5 flex gap-1.5" role="timer" aria-label={`${partes[0].v} dias, ${partes[1].v} horas e ${partes[2].v} minutos`}>
-        {partes.map((p) => (
-          <span key={p.r} aria-hidden="true" className="flex min-w-14 flex-col items-center rounded-xl bg-white/10 px-2 py-1.5">
-            <span className="font-titulo text-xl font-semibold tabular-nums">{String(p.v).padStart(2, "0")}</span>
-            <span className="text-[0.65rem] uppercase tracking-wider text-papel/60">{p.r}</span>
-          </span>
-        ))}
-      </div>
-    </div>
+    <p className="text-[0.8rem] leading-tight text-papel/70" role="timer" aria-label={`${partes[0].v} dias, ${partes[1].v} horas e ${partes[2].v} minutos`}>
+      {estado === "ativa" ? "Termina em" : "Começa em"}
+      <span aria-hidden="true" className="ml-1.5 font-titulo text-[1rem] font-semibold tabular-nums text-papel">
+        {partes[0].v > 0 && `${d}d `}{h}h {m}m {seg}s
+      </span>
+    </p>
   );
 }
