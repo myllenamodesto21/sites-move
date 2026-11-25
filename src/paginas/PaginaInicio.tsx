@@ -266,10 +266,12 @@ function Gestao() {
 
   const atual = CICLO_GESTAO[passo];
   return (
-    /* overflow-x-clip (e não hidden) para a caixa do ciclo conseguir ficar presa na tela. */
-    <section id="gestao" className="escuro textura relative overflow-x-clip bg-marinho text-papel">
+    /* overflow-x-clip (e não hidden) para a caixa do ciclo conseguir ficar presa na tela.
+       A textura fica só nos blocos de abertura e do ciclo: sobre a seção inteira, ela prendia a
+       cena do Método numa camada de mistura e, no iPhone, a cena tremia ao rolar. */
+    <section id="gestao" className="escuro relative overflow-x-clip bg-marinho text-papel">
       {/* Abertura da gestão: a linha fica no canto e o texto tem fundo limpo */}
-      <div data-rolagem className="relative overflow-hidden pb-16 pt-24 md:pb-24 md:pt-32">
+      <div data-rolagem className="textura relative overflow-hidden pb-16 pt-24 md:pb-24 md:pt-32">
         <FundoGrafismo
           tom="azul"
           tamanho="max(1100px, 95%)"

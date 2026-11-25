@@ -456,6 +456,7 @@
 /* ---------- Método Move: o caminho de uma pauta (cena guiada pela rolagem) ---------- */
 .caminho-palco {
   background: radial-gradient(120% 80% at 70% 40%, #182a52 0%, var(--move-marinho) 60%);
+  overflow-anchor: none;
 }
 /* Quanto se rola por capítulo: menos no celular, para a cena nunca parecer parada. */
 .caminho-curso {
