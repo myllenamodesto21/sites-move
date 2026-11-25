@@ -996,3 +996,9 @@
     display: none;
   }
 }
+
+/* A textura da abertura da Gestão some aos poucos embaixo, sem degrau para o bloco seguinte */
+.textura-funde::after {
+  -webkit-mask-image: linear-gradient(#000 60%, transparent);
+  mask-image: linear-gradient(#000 60%, transparent);
+}

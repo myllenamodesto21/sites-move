@@ -209,20 +209,13 @@ export function Rodape() {
           </ul>
         </div>
       </div>
-      <div data-rolagem className="envoltorio pointer-events-none select-none pt-4" aria-hidden="true">
-        <img
-          src={arquivo("marca/move-claro.webp")}
-          alt=""
-          width={640}
-          height={158}
-          loading="lazy"
-          className="paralaxe w-full opacity-[0.09]"
-          style={{ ["--forca" as string]: "-60px" }}
-        />
-      </div>
-      <div className="envoltorio flex flex-wrap justify-between gap-2 border-t border-white/10 py-6 text-sm text-papel/50">
+      <div className="envoltorio flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-white/10 pt-6 text-sm text-papel/50">
         <span>© {new Date().getFullYear()} Move Agência Digital</span>
         <span className="manuscrita text-lg text-bege/70">Marketing com processo e movimento.</span>
+      </div>
+      {/* A marca gigante fecha a página, sem nenhuma linha cruzando as letras */}
+      <div className="envoltorio pointer-events-none select-none pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-8" aria-hidden="true">
+        <img src={arquivo("marca/move-claro.webp")} alt="" width={640} height={158} loading="lazy" className="w-full opacity-[0.09]" />
       </div>
     </footer>
   );

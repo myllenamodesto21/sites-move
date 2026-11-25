@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { contatos, depoimento, servicos, type ServicoId } from "../config/site";
+import { contatos, depoimento, type ServicoId } from "../config/site";
 import { estadoDaCampanha } from "../lib/campanha";
 import { arquivo } from "../lib/rotas";
 import { registrar } from "../lib/medicao";
@@ -13,7 +13,6 @@ import { PitchOrcamento } from "../componentes/PitchOrcamento";
 import { Contagem, FundoGrafismo, Letreiro, MGigante, TextoAceso, TituloCinetico } from "../componentes/Movimento";
 
 const estado = estadoDaCampanha();
-const gestao = servicos.find((s) => s.id === "gestao")!;
 
 /* O ciclo de cada mês, contado pelo que muda para a cliente. */
 const CICLO_GESTAO = [
@@ -271,7 +270,7 @@ function Gestao() {
        cena do Método numa camada de mistura e, no iPhone, a cena tremia ao rolar. */
     <section id="gestao" className="escuro relative overflow-x-clip bg-marinho text-papel">
       {/* Abertura da gestão: a linha fica no canto e o texto tem fundo limpo */}
-      <div data-rolagem className="textura relative overflow-hidden pb-16 pt-24 md:pb-24 md:pt-32">
+      <div data-rolagem className="textura textura-funde relative overflow-hidden pb-16 pt-24 md:pb-24 md:pt-32">
         <FundoGrafismo
           tom="azul"
           tamanho="max(1100px, 95%)"
@@ -280,23 +279,23 @@ function Gestao() {
           forca={160}
         />
         <div className="envoltorio relative">
-          <p className="rotulo text-bege" data-revelar>01 · Carro-chefe</p>
+          <p className="rotulo text-bege" data-revelar>Para quem quer delegar as redes</p>
           <h2 className="display mt-5 max-w-[14ch] text-[2.8rem] md:text-[5.2rem]" data-revelar>
             Gestão de Redes <span className="font-light text-papel/70">Sociais.</span>
           </h2>
           <div className="mt-10 grid gap-8 border-t border-white/12 pt-8 md:mt-14 md:grid-cols-[0.9fr_1.1fr] md:items-start md:gap-16 md:pt-10" data-revelar>
             <p className="manuscrita text-[2rem] leading-[1.15] text-bege md:text-[2.4rem]">Uma equipe para colocar sua comunicação em movimento.</p>
             <p className="text-lg leading-relaxed text-papel/80 md:pt-1">
-              {gestao.paraQuem} A Move conecta estratégia, calendário e produção, e acompanha o que o trabalho está construindo, guiada pelo Método Move.
+              Você continua atendendo. A Move cuida das suas redes do começo ao fim: estratégia, calendário, roteiro, produção, publicação e análise. Todo mês, no tom da sua marca e com você aprovando cada peça.
             </p>
           </div>
         </div>
       </div>
 
       {/* O ciclo de cada mês: rolagem guiada, contado pelo que você ganha */}
-      <div className="envoltorio relative pb-20 md:pb-28">
+      <div className="envoltorio relative pb-20 pt-16 md:pb-28 md:pt-24">
         <div className="max-w-3xl" data-revelar>
-          <p className="rotulo text-papel/60">O ciclo de cada mês</p>
+          <p className="rotulo text-bege/80">O ciclo de cada mês</p>
           <h3 className="display mt-4 text-[2.1rem] md:text-[3.2rem]">Todo mês, sua marca avança. Sem você carregar o processo.</h3>
         </div>
         <div className="mt-12 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
@@ -361,22 +360,22 @@ function Gestao() {
             <Imagem id="G01" proporcao="aspect-[4/3]" />
           </div>
           <div className="flex flex-col gap-6" data-revelar>
-            <h3 className="display text-[2.2rem] md:text-[3rem]">Quem faz o quê.</h3>
+            <h3 className="display text-[2.2rem] leading-[1.05] md:text-[3rem]">Você entra com o que só você sabe. A Move faz o resto.</h3>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-2xl bg-white/[0.06] p-6 ring-1 ring-white/10">
                 <p className="rotulo text-bege">Você</p>
-                <p className="mt-2 text-papel/85">Fornece informações, grava os materiais combinados e aprova no prazo.</p>
+                <p className="mt-2 text-papel/85">Conta sobre o seu negócio, grava os materiais combinados e aprova no prazo.</p>
               </div>
               <div className="rounded-2xl bg-bege p-6 text-marinho">
                 <p className="rotulo text-azul">A Move</p>
-                <p className="mt-2">Conduz a estratégia e a produção contratada, publica e analisa.</p>
+                <p className="mt-2">Pensa a estratégia, escreve, produz o que foi contratado, publica e lê os resultados com você.</p>
               </div>
             </div>
             <p className="text-sm text-papel/65">Atendimento de direct e comentários, captação presencial e mídia paga não entram automaticamente no escopo.</p>
             <div className="mt-2 flex flex-col gap-4 border-t border-white/12 pt-8 sm:flex-row sm:items-center sm:justify-between">
-              <p className="max-w-[40ch] text-papel/80">{gestao.comoContratar}</p>
+              <p className="max-w-[40ch] text-papel/80">Começa com uma conversa sobre o momento do seu negócio. Depois, você recebe uma proposta com volume, formatos e prazos definidos.</p>
               <Botao variante="claro" className="shrink-0" onClick={() => abrirContato("gestao")}>
-                {gestao.cta} <Seta />
+                Quero delegar minhas redes <Seta />
               </Botao>
             </div>
           </div>
