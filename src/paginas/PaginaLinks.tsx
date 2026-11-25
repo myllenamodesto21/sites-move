@@ -90,14 +90,17 @@ function destaque() {
   const pitch = "A estratégia da sua marca e 24 pautas prontas para gravar, com a Move acompanhando.";
   if (estado === "ativa")
     return {
-      selo: `Black · ${Math.round((1 - c.preco / oferta.regular.preco) * 100)}% off · até ${dataBrasilia(c.fim)}`,
+      selo: c.nomeCurto,
+      etiqueta: `${Math.round((1 - c.preco / oferta.regular.preco) * 100)}% off`,
+      periodo: `${dataBrasilia(c.inicio)} a ${dataBrasilia(c.fim)}`,
       titulo,
       texto: pitch,
       cta: "Garantir o preço da Black",
     };
   if (estado === "pre")
     return {
-      selo: `Black · ${dataBrasilia(c.inicio)} a ${dataBrasilia(c.fim)}`,
+      selo: c.nomeCurto,
+      periodo: `${dataBrasilia(c.inicio)} a ${dataBrasilia(c.fim)}`,
       titulo,
       texto: pitch,
       cta: "Ver a oferta da Black",
@@ -244,18 +247,29 @@ export function PaginaLinks() {
               />
               <span aria-hidden="true" className="pointer-events-none absolute -bottom-24 -right-20 size-64 rounded-full bg-[radial-gradient(circle,rgb(106_146_193/0.35),transparent_65%)]" />
               <div className="relative p-5">
-                <p className="rotulo text-bege">{d.selo}</p>
-                <p className="display mt-2 text-balance text-[2.05rem] leading-[1.05]">{d.titulo}</p>
+                <div className="flex items-center justify-between gap-3">
+                  <p className="rotulo text-bege">{d.selo}</p>
+                  {"etiqueta" in d && d.etiqueta && (
+                    <span className="shrink-0 rounded-full bg-bege px-2.5 py-1 font-titulo text-[0.75rem] font-semibold leading-none text-marinho">{d.etiqueta}</span>
+                  )}
+                </div>
+                <p className="display mt-3 text-balance text-[2.05rem] leading-[1.05]">{d.titulo}</p>
                 <p className="mt-2 text-pretty text-[0.98rem] leading-snug text-papel/80">{d.texto}</p>
                 {/* O botão herda o giro do antigo selo: uma luz bege corre pela borda */}
-                <span className="botao-giro mt-4 flex rounded-full p-[2px]">
+                <span className="botao-giro mt-5 flex rounded-full p-[2px]">
                   <span className="relative z-[1] inline-flex min-h-12 w-full items-center justify-between gap-2 rounded-full bg-papel px-5 font-semibold text-azul">
                     {d.cta} <Seta className="size-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </span>
-                <div className="mt-3 text-center">
-                  <Contador />
-                </div>
+                {"periodo" in d && d.periodo && (
+                  <div className="mt-4 grid grid-cols-2 divide-x divide-white/15 rounded-2xl bg-white/[0.07] py-2.5 text-center ring-1 ring-white/10">
+                    <p className="px-2">
+                      <span className="block text-[0.68rem] uppercase tracking-[0.12em] text-papel/60">Período</span>
+                      <span className="mt-0.5 block font-titulo text-[1rem] font-semibold tabular-nums">{d.periodo}</span>
+                    </p>
+                    <Contador />
+                  </div>
+                )}
               </div>
             </a>
           </Brilho>
@@ -446,10 +460,10 @@ function Contador() {
   ];
   const [d, h, m, seg] = partes.map((p) => String(p.v).padStart(2, "0"));
   return (
-    <p className="text-[0.8rem] leading-tight text-papel/70" role="timer" aria-label={`${partes[0].v} dias, ${partes[1].v} horas e ${partes[2].v} minutos`}>
-      {estado === "ativa" ? "Termina em" : "Começa em"}
-      <span aria-hidden="true" className="ml-1.5 font-titulo text-[1rem] font-semibold tabular-nums text-papel">
-        {partes[0].v > 0 && `${d}d `}{h}h {m}m {seg}s
+    <p className="px-2" role="timer" aria-label={`${partes[0].v} dias, ${partes[1].v} horas e ${partes[2].v} minutos`}>
+      <span className="block text-[0.68rem] uppercase tracking-[0.12em] text-papel/60">{estado === "ativa" ? "Termina em" : "Começa em"}</span>
+      <span aria-hidden="true" className="mt-0.5 block font-titulo text-[1rem] font-semibold tabular-nums">
+        {partes[0].v > 0 ? `${d}d ${h}h ${m}m` : `${h}h ${m}m ${seg}s`}
       </span>
     </p>
   );
