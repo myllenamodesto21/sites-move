@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type Ref } from "react";
 
 /**
  * Método Move contado como o caminho de uma pauta, numa cena de tela cheia guiada pela rolagem.
@@ -35,7 +35,8 @@ const reduzido = () => typeof matchMedia !== "undefined" && matchMedia("(prefers
 
 export function CaminhoDoMetodo() {
   const secao = useRef<HTMLDivElement>(null);
-  const [progresso, setProgresso] = useState(0);
+  const linha = useRef<SVGPathElement>(null);
+  const [etapa, setEtapa] = useState(0);
 
   useEffect(() => {
     let quadro = 0;
@@ -45,7 +46,13 @@ export function CaminhoDoMetodo() {
       if (!el) return;
       const r = el.getBoundingClientRect();
       const curso = r.height - window.innerHeight;
-      setProgresso(Math.min(1, Math.max(0, -r.top / Math.max(1, curso))));
+      // Fora da tela, nada a fazer: a rolagem do resto da página não paga pela cena.
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, curso)));
+      // A linha avança direto no SVG, sem passar pelo React; o React só renderiza quando o capítulo muda.
+      linha.current?.setAttribute("stroke-dashoffset", String(1 - (0.08 + p * 0.92)));
+      const nova = Math.min(CAPITULOS.length - 1, Math.floor(p * CAPITULOS.length));
+      setEtapa((atual) => (atual === nova ? atual : nova));
     };
     const agendar = () => {
       if (!quadro) quadro = requestAnimationFrame(medir);
@@ -60,7 +67,6 @@ export function CaminhoDoMetodo() {
     };
   }, []);
 
-  const etapa = Math.min(CAPITULOS.length - 1, Math.floor(progresso * CAPITULOS.length));
   const irPara = (i: number) => {
     const el = secao.current;
     if (!el) return;
@@ -89,9 +95,9 @@ export function CaminhoDoMetodo() {
       </div>
 
       {/* O palco: alto o bastante para a rolagem conduzir os cinco capítulos */}
-      <div ref={secao} className="relative" style={{ height: `calc(100svh + ${CAPITULOS.length} * 75svh)` }}>
-        <div className="caminho-palco textura sticky top-0 h-[100svh] overflow-hidden" data-etapa={etapa}>
-          <LinhaDoCaminho progresso={progresso} />
+      <div ref={secao} className="caminho-curso relative" style={{ "--capitulos": CAPITULOS.length } as CSSProperties}>
+        <div className="caminho-palco sticky top-0 h-[100svh] overflow-hidden" data-etapa={etapa}>
+          <LinhaDoCaminho ref={linha} />
 
           <div className="envoltorio relative grid h-full grid-rows-[1fr_auto_auto] pb-5 pt-20 md:pb-8 md:pt-24 lg:grid-cols-[1fr_1fr] lg:grid-rows-[1fr_auto] lg:gap-x-12">
             {/* Texto do capítulo */}
@@ -167,10 +173,11 @@ export function CaminhoDoMetodo() {
 }
 
 /** A linha orgânica da IDV, desenhada pela rolagem de ponta a ponta do palco. */
-function LinhaDoCaminho({ progresso }: { progresso: number }) {
+function LinhaDoCaminho({ ref }: { ref: Ref<SVGPathElement> }) {
   return (
     <svg aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" className="pointer-events-none absolute inset-0 size-full opacity-60 md:opacity-100">
       <path
+        ref={ref}
         d="M-80 820 C 200 720, 420 900, 700 800 S 880 560, 1080 730 S 1390 580, 1300 340 S 1060 70, 860 190 S 980 -30, 1540 40"
         fill="none"
         stroke="var(--move-azul)"
@@ -178,7 +185,7 @@ function LinhaDoCaminho({ progresso }: { progresso: number }) {
         strokeLinecap="round"
         pathLength={1}
         strokeDasharray="1"
-        style={{ strokeDashoffset: 1 - (0.08 + progresso * 0.92), transition: "stroke-dashoffset 120ms linear" }}
+        strokeDashoffset={0.92}
       />
     </svg>
   );

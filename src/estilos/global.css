@@ -456,6 +456,18 @@
 /* ---------- Método Move: o caminho de uma pauta (cena guiada pela rolagem) ---------- */
 .caminho-palco {
   background: radial-gradient(120% 80% at 70% 40%, #182a52 0%, var(--move-marinho) 60%);
+  /* O palco preso vira uma camada própria: rolar a página não repinta a cena. */
+  contain: layout paint;
+  transform: translateZ(0);
+}
+/* Quanto se rola por capítulo: menos no celular, para a cena nunca parecer parada. */
+.caminho-curso {
+  height: calc(100svh + var(--capitulos) * 55svh);
+}
+@media (min-width: 768px) {
+  .caminho-curso {
+    height: calc(100svh + var(--capitulos) * 75svh);
+  }
 }
 .capitulo {
   pointer-events: none;
@@ -536,6 +548,7 @@
 .cena .fragmento.absorvido {
   opacity: 0;
   transform: scale(0.35);
+  animation-play-state: paused;
 }
 @keyframes flutuar {
   to {
@@ -612,14 +625,30 @@
   border: 1.5px dashed rgb(236 220 195 / 0.35);
   opacity: 0;
   transition: opacity 1s ease;
-  animation: girar 50s linear infinite;
+  animation: girar 50s linear infinite paused;
   pointer-events: none;
 }
 .cena .orbita.visivel {
   opacity: 1;
+  animation-play-state: running;
 }
 .cena .barra-video {
-  animation: tocar-video 7s linear infinite;
+  animation: tocar-video 7s linear infinite paused;
+}
+.cena:is([data-etapa="2"], [data-etapa="3"], [data-etapa="4"]) .barra-video {
+  animation-play-state: running;
+}
+/* No celular, as palavras entram só com opacidade e movimento: o desfoque pesa na rolagem. */
+@media (max-width: 767px) {
+  .capitulo .palavra {
+    filter: none;
+    transition:
+      opacity 0.6s cubic-bezier(0.2, 0.75, 0.15, 1),
+      transform 0.8s cubic-bezier(0.2, 0.75, 0.15, 1);
+  }
+  .cena .assinatura {
+    filter: none;
+  }
 }
 @keyframes tocar-video {
   from {
