@@ -14,7 +14,8 @@ type Capitulo = {
   rotulo: string;
   titulo: ReactNode;
   texto: string;
-  provas?: readonly string[];
+  /** O que aquela parte resolve para quem compra. */
+  ganho: string;
   prints: readonly Print[];
 };
 
@@ -29,7 +30,7 @@ const CAPITULOS: readonly Capitulo[] = [
     ),
     texto:
       "O planejamento da Andreza chegou num endereço só dela, escrito para o negócio dela. Abre no celular, na hora de gravar, e começa pelo objetivo: o que o perfil precisa fazer pelo estúdio.",
-    provas: ["Abre no celular", "Escrito para o seu negócio", "Tudo em um link"],
+    ganho: "Você para de depender da memória ou de um arquivo perdido. Abre o link antes de gravar e lembra para onde o perfil está indo.",
     prints: [{ src: "entrega/plan-abertura.webp", alt: "Abertura do planejamento estratégico do Studio Brasilê, com o título e o objetivo", largura: 1170, altura: 812 }],
   },
   {
@@ -42,7 +43,7 @@ const CAPITULOS: readonly Capitulo[] = [
     ),
     texto:
       "A Move transforma o que a Andreza vive no atendimento em situações concretas: quem precisa de tempo para se cuidar, quem está comparando profissionais, quem quer cuidar melhor do cabelo. Cada uma vira motivo de conteúdo.",
-    provas: ["Situações reais", "Objeções que aparecem", "Dúvidas da cliente"],
+    ganho: "Você para de falar para todo mundo e passa a responder a dúvida que trava a cliente antes de agendar.",
     prints: [{ src: "entrega/plan-situacoes.webp", alt: "Três situações da cliente do Studio Brasilê descritas no planejamento", largura: 1170, altura: 445 }],
   },
   {
@@ -55,7 +56,7 @@ const CAPITULOS: readonly Capitulo[] = [
     ),
     texto:
       "O planejamento define o que as pessoas precisam perceber antes de agendar, e como cada percepção aparece no conteúdo. No Brasilê, a prioridade foi deixar visível o critério da Andreza.",
-    provas: ["Percepção central", "Prioridade do ciclo", "Como demonstrar"],
+    ganho: "Cada post reforça o mesmo motivo para escolherem você, e não a concorrente mais barata.",
     prints: [
       { src: "entrega/plan-percepcao.webp", alt: "Percepção central do Studio Brasilê: No Brasilê, meu momento de vida é considerado", largura: 1170, altura: 450 },
       { src: "entrega/plan-prioridade.webp", alt: "Prioridade do primeiro ciclo: Andreza tem conhecimento e critério para me orientar", largura: 1170, altura: 505 },
@@ -71,7 +72,7 @@ const CAPITULOS: readonly Capitulo[] = [
     ),
     texto:
       "Cada pilar diz o que abordar, por que ele existe e em que formato funciona melhor. É daí que saem as pautas, sem tema solto de qualquer perfil.",
-    provas: ["O que abordar", "Por que existe", "Formatos orientados"],
+    ganho: "Acaba o branco na hora de postar: o assunto já tem motivo e formato.",
     prints: [{ src: "entrega/plan-pilar.webp", alt: "Pilar Cuidado em todas as fases, com o que abordar, por que existe e os formatos", largura: 1170, altura: 490 }],
   },
   {
@@ -84,7 +85,7 @@ const CAPITULOS: readonly Capitulo[] = [
     ),
     texto:
       "O planejamento termina num caminho prático: alinhar a direção, planejar o mês e produzir com orientação. Para a Andreza, três posts por semana com o que gravar e o que separar.",
-    provas: ["Primeiro", "Depois", "Em seguida"],
+    ganho: "Você sai sabendo o que fazer nesta semana, não só o que a marca deveria ser.",
     prints: [{ src: "entrega/plan-rotina.webp", alt: "Como a estratégia vira rotina: alinhar a direção, planejar o mês e orientar a produção", largura: 1170, altura: 529 }],
   },
   {
@@ -97,7 +98,7 @@ const CAPITULOS: readonly Capitulo[] = [
     ),
     texto:
       "Depois do planejamento, cada conteúdo ganha data, formato e roteiro cena a cena no portal da Move. A Andreza começou atendendo no banheiro de casa; a Move transformou isso em conteúdo que aproxima.",
-    provas: ["Data e formato", "Ideia central", "Roteiro"],
+    ganho: "Você grava sem improvisar: o objetivo, a cena e a fala já estão escritos.",
     prints: [
       { src: "entrega/pauta.webp", alt: "Pauta aberta com objetivo, ideia central e como produzir", largura: 1144, altura: 1090, origem: "portal" },
       { src: "entrega/roteiro.webp", alt: "Roteiro da pauta dividido em cenas", largura: 1144, altura: 495, origem: "portal" },
@@ -126,7 +127,7 @@ export function EntregaDesdobrada() {
             Isto é o que a Andreza recebeu. <span className="text-papel/45">Não é modelo, é a entrega real.</span>
           </h2>
           <p className="mt-5 max-w-[46ch] text-lg text-papel/70">
-            Role e veja, peça por peça, o planejamento que organizou o perfil do Studio Brasilê. No seu, tudo é feito para o seu negócio.
+            Role e veja, peça por peça, o planejamento que organizou o perfil do Studio Brasilê e o que cada parte resolve. No seu, tudo é feito para o seu negócio.
           </p>
         </div>
 
@@ -140,15 +141,10 @@ export function EntregaDesdobrada() {
                 </p>
                 <h3 className="display mt-4 text-[1.9rem] leading-[1.08] md:text-[2.6rem]">{c.titulo}</h3>
                 <p className="mt-4 max-w-[44ch] text-[1.05rem] leading-relaxed text-papel/70">{c.texto}</p>
-                {c.provas && (
-                  <ul className="mt-6 flex flex-wrap gap-2">
-                    {c.provas.map((p) => (
-                      <li key={p} className="rounded-full bg-white/[0.06] px-3.5 py-1.5 text-sm text-papel/80 ring-1 ring-white/10">
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <p className="mt-6 max-w-[44ch] border-l-2 border-bege/60 pl-4 text-[1.05rem] leading-relaxed text-papel">
+                  <span className="rotulo mb-1 block text-bege">O que resolve para você</span>
+                  {c.ganho}
+                </p>
               </div>
               <div className={`relative ${i % 2 ? "md:order-1" : ""}`} data-revelar style={{ ["--atraso" as string]: "120ms" }}>
                 <div aria-hidden="true" className="pointer-events-none absolute -inset-6 rounded-[3rem] bg-[radial-gradient(60%_60%_at_50%_50%,rgb(26_56_128/0.45),transparent_70%)]" />
