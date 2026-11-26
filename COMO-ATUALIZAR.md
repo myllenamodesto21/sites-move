@@ -8,6 +8,7 @@ Três rotas independentes no mesmo projeto, com componentes compartilhados:
 | `/planejamento/` | Página de vendas do Planejamento (Black e regular na mesma URL) | `src/paginas/planejamento/PaginaPlanejamento.tsx` |
 | `/links/` | Microsite da bio | `src/paginas/PaginaLinks.tsx` |
 | `/black/` | Atalho que redireciona para `/planejamento/`, preservando a origem | `src/entradas/black.tsx` |
+| `/sob-medida/` | Página de vendas dos sites, catálogos e apps sob medida (HTML, CSS e JS puros, fora do React) | `public/sob-medida/` |
 
 Stack: Vite + React + TypeScript + Tailwind 4 (mesmas cores, fontes e regras de texto do `sistema-move`). Site estático: publica em qualquer hospedagem, inclusive Vercel.
 
@@ -69,7 +70,16 @@ Cada espaço tem um código (A01 foto da Andreza, A13 apresentação, A14 equipe
 
 Parâmetros `utm_*`, `fbclid`, `gclid`, `ref` e `origem` são preservados entre bio, site e oferta (e guardados na visita), seguem para o checkout e entram na mensagem do WhatsApp como "(origem: ...)".
 
-## 7. Eventos de conversão
+## 7. Sites, catálogos e apps sob medida: `public/sob-medida/`
+
+Página independente (HTML, CSS e JS puros, sem build), copiada como está para `dist/sob-medida/`. Não cita campanha nem desconto: serve para mandar a qualquer empresa.
+
+- Tudo que muda fica em `public/sob-medida/js/config.js`: WhatsApp, mensagem padrão, pacotes (prazo), manutenção, cases, perguntas frequentes e Instagram. Campo entre colchetes, como `"[PRAZO]"`, fica escondido no site até ser preenchido.
+- Cada botão abre o WhatsApp com uma mensagem pronta (geral, por nicho no `data-wa-msg` do `index.html`, por pacote e por dúvida). A origem do visitante (`origem`, `utm_source` ou `ref`) entra no fim como "(origem: ...)". Para saber quem veio de qual envio, mande o link com a origem, por exemplo `moveagencia.com.br/sob-medida/?origem=condominio`.
+- Prints dos cases em `public/sob-medida/assets/cases/` (WebP, 600 px de largura). Sem o arquivo, aparece o espaço "Print do case".
+- É um app instalável (manifest e service worker próprios, com escopo em `/sob-medida/`). Ao mudar a página, troque `VERSAO` em `public/sob-medida/sw.js` para os celulares pegarem a versão nova.
+
+## 8. Eventos de conversão
 
 `src/lib/medicao.ts` envia eventos para `window.dataLayer` somente se uma ferramenta de análise for instalada: clique no CTA principal, abertura de amostra, início de checkout, abertura de contato, abertura do WhatsApp e escolha de objetivo na bio.
 
