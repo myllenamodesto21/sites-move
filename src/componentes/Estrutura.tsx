@@ -46,15 +46,33 @@ export function FaixaCampanha({ estado }: { estado: EstadoCampanha }) {
   );
 }
 
-export type ItemMenu = { rotulo: string; href: string };
+export type ItemMenu = { rotulo: string; href: string; pagina?: string };
+
+/** O mesmo menu em todas as páginas: o site inteiro interligado. */
+function menuDoSite(): ItemMenu[] {
+  return [
+    { rotulo: "Gestão de Redes", href: href("inicio", { hash: "gestao" }), pagina: "inicio" },
+    { rotulo: "Método", href: href("metodo"), pagina: "metodo" },
+    { rotulo: "Jornada do Cliente", href: href("jornada"), pagina: "jornada" },
+    { rotulo: "Planejamento", href: href("planejamento"), pagina: "planejamento" },
+    { rotulo: "Links", href: href("links"), pagina: "links" },
+  ];
+}
+
+/** Qual página do menu está aberta agora, pelo endereço. */
+function paginaAtual() {
+  const p = location.pathname.replace(/index\.html$/, "");
+  const achada = ["metodo", "jornada", "planejamento", "black", "links"].find((n) => p.includes(`/${n}/`));
+  return achada === "black" ? "planejamento" : achada ?? "inicio";
+}
 
 export function Cabecalho({
-  itens,
   acao,
   sobreEscuro = false,
   noturno = false,
 }: {
-  itens: ItemMenu[];
+  /** Antigo menu por seção da página; hoje todas as páginas usam o menu do site. */
+  itens?: ItemMenu[];
   /** Cabeçalho sempre escuro (páginas no clima da Black). */
   noturno?: boolean;
   acao?: { rotulo: string; onClick: () => void };
@@ -76,6 +94,8 @@ export function Cabecalho({
     };
   }, [sobreEscuro]);
   const claro = noturno || (sobreEscuro && !rolou && !aberto);
+  const itens = menuDoSite();
+  const atual = paginaAtual();
   return (
     <header
       className={`sticky top-0 z-40 transition-[background-color,border-color,color] duration-500 ${
@@ -90,12 +110,13 @@ export function Cabecalho({
         <a href={href("inicio")} aria-label="Move, página inicial" className="-ml-1 rounded-lg p-1">
           <Marca claro={claro} />
         </a>
-        <nav aria-label="Principal" className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Principal" className="hidden items-center gap-6 lg:flex xl:gap-8">
           {itens.map((i) => (
             <a
               key={i.href}
               href={i.href}
-              className={`relative text-[0.95rem] transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+              aria-current={i.pagina === atual && i.pagina !== "inicio" ? "page" : undefined}
+              className={`relative text-[0.95rem] aria-[current=page]:font-semibold aria-[current=page]:after:scale-x-100 transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                 claro ? "text-papel/80 hover:text-papel" : "text-suave hover:text-marinho"
               }`}
             >
@@ -116,7 +137,7 @@ export function Cabecalho({
         </nav>
         <button
           type="button"
-          className={`grid size-11 place-items-center rounded-full border md:hidden ${claro ? "border-white/30" : "border-linha"}`}
+          className={`grid size-11 place-items-center rounded-full border lg:hidden ${claro ? "border-white/30" : "border-linha"}`}
           aria-expanded={aberto}
           aria-controls="menu-movel"
           onClick={() => setAberto((a) => !a)}
@@ -129,12 +150,13 @@ export function Cabecalho({
         </button>
       </div>
       {aberto && (
-        <nav id="menu-movel" aria-label="Principal" className={`entrar border-t md:hidden ${noturno ? "border-white/10" : "border-linha"}`}>
+        <nav id="menu-movel" aria-label="Principal" className={`entrar border-t lg:hidden ${noturno ? "border-white/10" : "border-linha"}`}>
           <ul className="envoltorio flex flex-col py-2">
             {itens.map((i) => (
               <li key={i.href}>
                 <a
                   href={i.href}
+                  aria-current={i.pagina === atual && i.pagina !== "inicio" ? "page" : undefined}
                   onClick={() => setAberto(false)}
                   className={`flex min-h-13 items-center justify-between border-b py-3 text-lg ${noturno ? "border-white/10" : "border-linha/60"}`}
                 >

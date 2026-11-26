@@ -57,11 +57,6 @@ export function PaginaJornada() {
       <FaixaCampanha estado={estado} />
       <Cabecalho
         noturno
-        itens={[
-          { rotulo: "O caminho", href: "#caminho" },
-          { rotulo: "Como funciona", href: "#como-funciona" },
-          { rotulo: "Método e entregas", href: href("metodo") },
-        ]}
         acao={{ rotulo: "Conversar", onClick: () => abrirContato("jornada") }}
       />
       <main id="conteudo" className="escuro bg-marinho text-papel">

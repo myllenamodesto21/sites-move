@@ -96,11 +96,6 @@ export function PaginaMetodo() {
       <FaixaCampanha estado={estado} />
       <Cabecalho
         noturno
-        itens={[
-          { rotulo: "Conceito", href: "#conceito" },
-          { rotulo: "Método", href: "#etapas" },
-          { rotulo: "Entregas", href: "#entregas" },
-        ]}
         acao={{ rotulo: "Conversar", onClick: () => abrirContato("geral") }}
       />
       <main id="conteudo" className="escuro bg-marinho text-papel">

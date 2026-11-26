@@ -50,12 +50,6 @@ export function PaginaPlanejamento() {
         )}
         <Cabecalho
           noturno
-          itens={[
-            { rotulo: "A entrega", href: "#entregaveis" },
-            { rotulo: "Como funciona", href: "#como-funciona" },
-            { rotulo: campanha ? "Preço da Black" : "Investimento", href: "#investimento" },
-            { rotulo: "Dúvidas", href: "#duvidas" },
-          ]}
           acao={{ rotulo: "Tirar uma dúvida", onClick: duvida }}
         />
         <main id="conteudo" className="escuro">

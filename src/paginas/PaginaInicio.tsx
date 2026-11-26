@@ -39,13 +39,6 @@ export function PaginaInicio() {
       <FaixaCampanha estado={estado} />
       <Cabecalho
         sobreEscuro
-        itens={[
-          { rotulo: "Gestão", href: "#gestao" },
-          { rotulo: "Método", href: "#metodo" },
-          { rotulo: "Sobre", href: "#sobre" },
-          { rotulo: "Orçamento", href: "#orcamento" },
-          { rotulo: "Contato", href: "#contato" },
-        ]}
         acao={{ rotulo: "Conversar com a Move", onClick: () => abrirContato("geral") }}
       />
       <main id="conteudo">

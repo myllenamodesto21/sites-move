@@ -93,7 +93,6 @@ export const servicos: Servico[] = [
     comoContratar: "Conversa sobre os canais atuais, envio de materiais e acessos, proposta com prazo.",
     cta: "Organizar meus canais",
     destino: "contato",
-    preco: "R$ 890",
   },
   {
     id: "projetos",

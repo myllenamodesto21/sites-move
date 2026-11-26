@@ -24,7 +24,7 @@ const ok=(c,m)=>{console.log((c?'OK   ':'FALHA')+' '+m); if(!c) process.exitCode
   ok(!(await p.isVisible('dialog[open]')),'Esc fecha o contato');
   // entrega desdobrada: prints reais carregam
   const prints=await p.evaluate(async()=>{const im=[...document.querySelectorAll('#entregaveis img')];im.forEach(i=>i.loading='eager');await Promise.all(im.map(i=>i.decode().catch(()=>null)));return im.map(i=>i.naturalWidth)});
-  ok(prints.length===7&&prints.every(w=>w>1000),'entrega: 7 prints reais carregados '+prints.join(','));
+  ok(prints.length===8&&prints.every(w=>w>1000),'entrega: 8 prints reais carregados '+prints.join(','));
   ok(await p.locator('#entregaveis >> text=Manaus').count()===0,'entrega: sem Manaus');
   // 2. bio -> gestão contato
   p=await nova(); await p.goto(B+'links/index.html?utm_source=instagram');

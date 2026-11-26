@@ -7,7 +7,7 @@ import { arquivo } from "../../lib/rotas";
  * conceito da entrega: a copy vende a ideia e o print prova que ela existe.
  */
 
-type Print = { src: string; alt: string; largura: number; altura: number };
+type Print = { src: string; alt: string; largura: number; altura: number; origem?: "planejamento" | "portal" };
 
 type Capitulo = {
   id: string;
@@ -28,78 +28,92 @@ const CAPITULOS: readonly Capitulo[] = [
       </>
     ),
     texto:
-      "A Andreza abre no celular, na hora de gravar. Direção, estratégia, calendário e orientações no mesmo lugar, escritos para o negócio dela e atualizados pela Move a cada ajuste.",
-    provas: ["Abre no celular", "Atualizado pela Move", "Tudo em um link"],
-    prints: [{ src: "entrega/portal-visao.webp", alt: "Visão geral da estratégia do Studio Brasilê no portal da Move, com a direção da marca", largura: 1200, altura: 1500 }],
+      "O planejamento da Andreza chegou num endereço só dela, escrito para o negócio dela. Abre no celular, na hora de gravar, e começa pelo objetivo: o que o perfil precisa fazer pelo estúdio.",
+    provas: ["Abre no celular", "Escrito para o seu negócio", "Tudo em um link"],
+    prints: [{ src: "entrega/plan-abertura.webp", alt: "Abertura do planejamento estratégico do Studio Brasilê, com o título e o objetivo", largura: 1170, altura: 812 }],
   },
   {
-    id: "posicionamento",
-    rotulo: "Posicionamento",
+    id: "publico",
+    rotulo: "Quem você quer alcançar",
     titulo: (
       <>
-        A Move encontra o que você já faz de diferente <span className="text-bege">e coloca em palavras.</span>
+        Não é um público genérico. <span className="text-bege">São situações reais da sua cliente.</span>
       </>
     ),
     texto:
-      "No Brasilê, o diferencial estava no atendimento e não aparecia no perfil: critério para indicar ou adiar um procedimento, finalização atenta e acolhimento de verdade. Agora cada decisão vem com o que significa e como aplicar no dia a dia.",
-    provas: ["O que significa", "Como aplicar"],
-    prints: [{ src: "entrega/posicionamento.webp", alt: "Decisão de posicionamento do Studio Brasilê, com o que significa e como aplicar", largura: 1144, altura: 650 }],
+      "A Move transforma o que a Andreza vive no atendimento em situações concretas: quem precisa de tempo para se cuidar, quem está comparando profissionais, quem quer cuidar melhor do cabelo. Cada uma vira motivo de conteúdo.",
+    provas: ["Situações reais", "Objeções que aparecem", "Dúvidas da cliente"],
+    prints: [{ src: "entrega/plan-situacoes.webp", alt: "Três situações da cliente do Studio Brasilê descritas no planejamento", largura: 1170, altura: 445 }],
   },
   {
-    id: "mensagem",
-    rotulo: "Mensagem central",
+    id: "percepcao",
+    rotulo: "Como você quer ser lembrada",
     titulo: (
       <>
-        Uma frase que segura <span className="text-bege">todo o conteúdo.</span>
+        A frase que a cliente <span className="text-bege">vai pensar sobre você.</span>
       </>
     ),
     texto:
-      "Quando a mensagem é clara, cada post reforça a mesma ideia e a cliente entende por que escolher você. A do Brasilê virou um convite, nunca uma cobrança por aparência.",
-    prints: [{ src: "entrega/mensagem.webp", alt: "Mensagem central do Studio Brasilê: Sua vida muda. Você continua merecendo cuidado.", largura: 1144, altura: 535 }],
+      "O planejamento define o que as pessoas precisam perceber antes de agendar, e como cada percepção aparece no conteúdo. No Brasilê, a prioridade foi deixar visível o critério da Andreza.",
+    provas: ["Percepção central", "Prioridade do ciclo", "Como demonstrar"],
+    prints: [
+      { src: "entrega/plan-percepcao.webp", alt: "Percepção central do Studio Brasilê: No Brasilê, meu momento de vida é considerado", largura: 1170, altura: 450 },
+      { src: "entrega/plan-prioridade.webp", alt: "Prioridade do primeiro ciclo: Andreza tem conhecimento e critério para me orientar", largura: 1170, altura: 505 },
+    ],
   },
   {
-    id: "linhas",
-    rotulo: "Linhas de conteúdo",
+    id: "pilares",
+    rotulo: "Pilares de conteúdo",
     titulo: (
       <>
-        Assuntos que só você pode falar. <span className="text-bege">Nunca mais tema de qualquer perfil.</span>
+        Assuntos que só você pode falar. <span className="text-bege">Cada um com um motivo.</span>
       </>
     ),
     texto:
-      "Cada linha nasce do que a marca vive e responde perguntas reais da cliente. É daí que saem as pautas, com motivo para existir.",
-    provas: ["Cuidado em todas as fases", "Critério antes do procedimento", "Resultado que tem contexto", "Por dentro do Brasilê"],
-    prints: [{ src: "entrega/linhas.webp", alt: "Linhas de conteúdo do Studio Brasilê com o que cada uma responde", largura: 1144, altura: 1095 }],
+      "Cada pilar diz o que abordar, por que ele existe e em que formato funciona melhor. É daí que saem as pautas, sem tema solto de qualquer perfil.",
+    provas: ["O que abordar", "Por que existe", "Formatos orientados"],
+    prints: [{ src: "entrega/plan-pilar.webp", alt: "Pilar Cuidado em todas as fases, com o que abordar, por que existe e os formatos", largura: 1170, altura: 490 }],
   },
   {
-    id: "calendario",
-    rotulo: "Plano de conteúdo",
+    id: "rotina",
+    rotulo: "Da estratégia para a rotina",
     titulo: (
       <>
-        Abriu o dia, <span className="text-bege">sabe o que postar.</span>
+        Você sabe o que fazer <span className="text-bege">e em que ordem.</span>
       </>
     ),
     texto:
-      "Cada conteúdo tem data, formato e a linha a que pertence. Acaba o domingo à noite pensando no que postar na semana.",
-    provas: ["Data", "Formato", "Linha de conteúdo"],
-    prints: [{ src: "entrega/plano.webp", alt: "Plano de conteúdo do Studio Brasilê com datas, formatos e linhas", largura: 1144, altura: 1125 }],
+      "O planejamento termina num caminho prático: alinhar a direção, planejar o mês e produzir com orientação. Para a Andreza, três posts por semana com o que gravar e o que separar.",
+    provas: ["Primeiro", "Depois", "Em seguida"],
+    prints: [{ src: "entrega/plan-rotina.webp", alt: "Como a estratégia vira rotina: alinhar a direção, planejar o mês e orientar a produção", largura: 1170, altura: 529 }],
   },
   {
     id: "pauta",
-    rotulo: "Pauta pronta para gravar",
+    rotulo: "E no sistema da Move",
     titulo: (
       <>
-        A história dela, <span className="text-bege">contada do jeito dela.</span>
+        Abriu o dia, <span className="text-bege">sabe o que gravar.</span>
       </>
     ),
     texto:
-      "Cada pauta traz o objetivo, a ideia central, como produzir e o roteiro cena a cena. A Andreza começou atendendo no banheiro de casa; a Move transformou isso em conteúdo que aproxima. No seu planejamento, a matéria-prima é a sua história.",
-    provas: ["Objetivo", "Ideia central", "Como produzir", "Roteiro"],
+      "Depois do planejamento, cada conteúdo ganha data, formato e roteiro cena a cena no portal da Move. A Andreza começou atendendo no banheiro de casa; a Move transformou isso em conteúdo que aproxima.",
+    provas: ["Data e formato", "Ideia central", "Roteiro"],
     prints: [
-      { src: "entrega/pauta.webp", alt: "Pauta aberta com objetivo, ideia central e como produzir", largura: 1144, altura: 1090 },
-      { src: "entrega/roteiro.webp", alt: "Roteiro da pauta dividido em cenas", largura: 1144, altura: 495 },
+      { src: "entrega/pauta.webp", alt: "Pauta aberta com objetivo, ideia central e como produzir", largura: 1144, altura: 1090, origem: "portal" },
+      { src: "entrega/roteiro.webp", alt: "Roteiro da pauta dividido em cenas", largura: 1144, altura: 495, origem: "portal" },
     ],
   },
 ];
+
+/**
+ * Palavras da Andreza no WhatsApp durante a entrega, copiadas sem mudar nada (só o trecho do elogio).
+ * Quando chegar o depoimento oficial, troque esta lista.
+ */
+const FALAS_DA_ANDREZA = [
+  "Amigaaaa que perfeição a proposta. Nossa eu amei do início ao fim. Você é ótimaaa no que faz 👏🏻👏🏻",
+  "Eu emocionei aqui ta 🥺\nVocê soube captar exatamente o que eu quero",
+  "Ótimooo, amando as ideias. Tu soube captar exatamente o que preciso e o tipo de assuntos pra gente soltar.",
+] as const;
 
 export function EntregaDesdobrada() {
   return (
@@ -148,8 +162,29 @@ export function EntregaDesdobrada() {
           ))}
         </ol>
 
-        <p className="mt-16 max-w-3xl text-sm text-papel/45 md:mt-24">
-          Prints reais do portal do Studio Brasilê, publicados com autorização da Andreza. O planejamento é o mesmo método; a estratégia, as linhas e as pautas são feitas para o seu negócio.
+        {/* O que a Andreza disse ao receber */}
+        <figure className="mt-20 grid gap-8 rounded-[2rem] bg-white/[0.04] p-6 ring-1 ring-white/10 md:mt-28 md:grid-cols-[0.8fr_1.2fr] md:gap-12 md:p-10" data-revelar>
+          <figcaption>
+            <p className="rotulo text-bege">Quem recebeu</p>
+            <p className="display mt-3 text-[1.9rem] leading-[1.08] md:text-[2.4rem]">O que a Andreza disse ao ver o planejamento.</p>
+            <p className="mt-3 text-sm text-papel/55">Mensagens dela no WhatsApp, do jeito que chegaram.</p>
+          </figcaption>
+          <div className="flex flex-col gap-2.5">
+            {FALAS_DA_ANDREZA.map((f, i) => (
+              <blockquote
+                key={i}
+                className="relative max-w-[34ch] whitespace-pre-line rounded-[1.1rem] rounded-tl-sm bg-[#1f2c34] px-4 py-3 text-[1rem] leading-snug text-[#e9edef] shadow-[0_10px_30px_-18px_rgba(0,0,0,0.8)]"
+                style={{ marginLeft: `${(i % 2) * 1.25}rem` }}
+              >
+                {f}
+              </blockquote>
+            ))}
+            <p className="mt-1 text-sm text-papel/60">Andreza, Studio Brasilê</p>
+          </div>
+        </figure>
+
+        <p className="mt-12 max-w-3xl text-sm text-papel/45">
+          Prints reais do planejamento e do portal do Studio Brasilê, publicados com autorização da Andreza. O método é o mesmo; a estratégia, os pilares e as pautas são feitos para o seu negócio.
         </p>
       </div>
     </section>
@@ -164,7 +199,7 @@ function Janela({ print, deslocada }: { print: Print; deslocada: boolean }) {
         <span className="size-2.5 rounded-full bg-[#d8ae82]" />
         <span className="size-2.5 rounded-full bg-[#d5d6db]" />
         <span className="size-2.5 rounded-full bg-[#d5d6db]" />
-        <span className="ml-3 truncate rounded-full bg-black/[0.05] px-3 py-0.5 text-[0.7rem] text-marinho/55">portal da Move · Minha estratégia</span>
+        <span className="ml-3 truncate rounded-full bg-black/[0.05] px-3 py-0.5 text-[0.7rem] text-marinho/55">{print.origem === "portal" ? "portal da Move · Minha estratégia" : "Planejamento estratégico · Studio Brasilê"}</span>
       </div>
       <div className="p-3 md:p-4">
         <img src={arquivo(print.src)} alt={print.alt} width={print.largura} height={print.altura} loading="lazy" decoding="async" className="block h-auto w-full" />

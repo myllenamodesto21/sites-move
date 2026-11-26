@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { contatos } from "../config/site";
-import { href } from "../lib/rotas";
 import { Cabecalho, Pagina, Rodape } from "./Estrutura";
 import { abrirContato } from "./Contato";
 import { FundoGrafismo } from "./Movimento";
@@ -26,12 +25,6 @@ export function PaginaLegal({
   return (
     <Pagina>
       <Cabecalho
-        itens={[
-          { rotulo: "Gestão", href: href("inicio", { hash: "gestao" }) },
-          { rotulo: "Método", href: href("inicio", { hash: "metodo" }) },
-          { rotulo: "Sobre", href: href("inicio", { hash: "sobre" }) },
-          { rotulo: "Orçamento", href: href("inicio", { hash: "orcamento" }) },
-        ]}
         acao={{ rotulo: "Conversar com a Move", onClick: () => abrirContato("geral") }}
       />
       <main id="conteudo" className="bg-papel">
