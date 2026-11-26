@@ -74,7 +74,7 @@ Parâmetros `utm_*`, `fbclid`, `gclid`, `ref` e `origem` são preservados entre 
 
 Página independente (HTML, CSS e JS puros, sem build), copiada como está para `dist/sob-medida/`. Não cita campanha nem desconto: serve para mandar a qualquer empresa.
 
-- Tudo que muda fica em `public/sob-medida/js/config.js`: WhatsApp, mensagem padrão, pacotes (prazo), manutenção, cases, perguntas frequentes e Instagram. Campo entre colchetes, como `"[PRAZO]"`, fica escondido no site até ser preenchido.
+- Tudo que muda fica em `public/sob-medida/js/config.js`: WhatsApp, mensagem padrão, pacotes, cases, perguntas frequentes e Instagram. Sem prazo nem mensalidade na página: o prazo vem na proposta e o projeto não tem mensalidade. Campo entre colchetes, como `"[PRAZO]"`, fica escondido no site até ser preenchido.
 - Cada botão abre o WhatsApp com uma mensagem pronta (geral, por nicho no `data-wa-msg` do `index.html`, por pacote e por dúvida). A origem do visitante (`origem`, `utm_source` ou `ref`) entra no fim como "(origem: ...)". Para saber quem veio de qual envio, mande o link com a origem, por exemplo `moveagencia.com.br/sob-medida/?origem=condominio`.
 - Prints dos cases em `public/sob-medida/assets/cases/` (WebP, 600 px de largura). Sem o arquivo, aparece o espaço "Print do case".
 - É um app instalável (manifest e service worker próprios, com escopo em `/sob-medida/`). Ao mudar a página, troque `VERSAO` em `public/sob-medida/sw.js` para os celulares pegarem a versão nova.

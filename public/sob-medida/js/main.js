@@ -82,12 +82,6 @@
       a.href = "https://instagram.com/" + encodeURIComponent(insta);
       a.textContent = "@" + insta;
     });
-
-    if (preenchido(C.manutencao)) {
-      var m = document.querySelector("[data-manutencao]");
-      m.textContent = "Manutenção mensal opcional: " + C.manutencao;
-      m.hidden = false;
-    }
   }
 
   /* ---------- Pacotes ---------- */
@@ -111,10 +105,6 @@
       if (preenchido(p.paraQuem)) {
         dl.appendChild(el("dt", "", "Para quem"));
         dl.appendChild(el("dd", "", p.paraQuem));
-      }
-      if (preenchido(p.prazo)) {
-        dl.appendChild(el("dt", "", "Prazo"));
-        dl.appendChild(el("dd", "", p.prazo));
       }
       c.appendChild(dl);
 

@@ -1,5 +1,5 @@
 /* Service worker: cache offline básico. Mude a VERSAO a cada publicação para renovar o cache. */
-const VERSAO = "move-sob-medida-v1";
+const VERSAO = "move-sob-medida-v2";
 const ESSENCIAIS = [
   "./",
   "index.html",
