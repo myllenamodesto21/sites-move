@@ -147,10 +147,12 @@ export const imagens: Record<string, ImagemConfig> = {
     pendencia: "Fotografia real de trabalho da Move.",
   },
   G01: {
-    src: null,
-    alt: "Calendário e produção da Gestão de Redes",
-    legenda: "Gestão de Redes: do calendário à publicação",
-    pendencia: "Material próprio da modalidade Gestão (não usar o case de consultoria).",
+    src: "fotos/gestao-calendario.webp",
+    largura: 1229,
+    altura: 551,
+    alt: "Calendário de posts de um cliente de Gestão no sistema da Move, com reels, carrosséis e estáticos agendados na semana",
+    legenda: "Calendário real de um cliente de Gestão no sistema da Move",
+    pendencia: "Print do calendário enviado pela Myllena em 26/11 (nome da cliente cortado).",
   },
 };
 

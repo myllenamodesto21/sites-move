@@ -350,7 +350,7 @@ function Gestao() {
       <div className="envoltorio relative py-20 md:py-28">
         <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
           <div data-revelar>
-            <Imagem id="G01" proporcao="aspect-[4/3]" />
+            <Imagem id="G01" proporcao="aspect-[1229/551] ring-1 ring-white/15" />
           </div>
           <div className="flex flex-col gap-6" data-revelar>
             <h3 className="display text-[2.2rem] leading-[1.05] md:text-[3rem]">Você entra com o que só você sabe. A Move faz o resto.</h3>
