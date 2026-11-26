@@ -55,6 +55,7 @@ function menuDoSite(): ItemMenu[] {
     { rotulo: "Método", href: href("metodo"), pagina: "metodo" },
     { rotulo: "Jornada do Cliente", href: href("jornada"), pagina: "jornada" },
     { rotulo: "Planejamento", href: href("planejamento"), pagina: "planejamento" },
+    { rotulo: "Sites e apps", href: href("sobMedida"), pagina: "sob-medida" },
     { rotulo: "Links", href: href("links"), pagina: "links" },
   ];
 }
@@ -213,6 +214,7 @@ export function Rodape() {
             <li><a className="hover:text-papel" href={href("metodo")}>Método e entregas</a></li>
             <li><a className="hover:text-papel" href={href("jornada")}>Jornada do Cliente</a></li>
             <li><a className="hover:text-papel" href={href("planejamento")}>Planejamento Estratégico</a></li>
+            <li><a className="hover:text-papel" href={href("sobMedida")}>Sites, catálogos e apps</a></li>
             <li><a className="hover:text-papel" href={href("links")}>Links rápidos</a></li>
           </ul>
         </nav>

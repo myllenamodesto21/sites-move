@@ -6,8 +6,8 @@ const PREVIA = import.meta.env.MODE === "previa";
 const CHAVES = /^(utm_[a-z]+|fbclid|gclid|ref|origem|estado)$/;
 const MEMORIA = "move-origem";
 
-export type Rota = "inicio" | "planejamento" | "links" | "privacidade" | "termos" | "metodo" | "jornada";
-const CAMINHOS: Record<Rota, string> = { inicio: "", planejamento: "planejamento/", links: "links/", privacidade: "privacidade/", termos: "termos/", metodo: "metodo/", jornada: "jornada/" };
+export type Rota = "inicio" | "planejamento" | "links" | "privacidade" | "termos" | "metodo" | "jornada" | "sobMedida";
+const CAMINHOS: Record<Rota, string> = { inicio: "", planejamento: "planejamento/", links: "links/", privacidade: "privacidade/", termos: "termos/", metodo: "metodo/", jornada: "jornada/", sobMedida: "sob-medida/" };
 
 /** Lê a origem da URL atual; se não houver, usa a que ficou guardada nesta visita. */
 export function parametrosDeOrigem(): URLSearchParams {
